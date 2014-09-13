@@ -1,0 +1,13 @@
+{
+  "manifest_version": 2,
+  "name": "github-notif-helper",
+  "version": "0.0.1",
+  "description": "highlights a github notification if username is mentioned",
+  "permissions": ["http://*.github.com/notifications", "https://*.github.com/notifications"],
+  "content_scripts": [
+                        {
+                          "matches": ["https://github.com/notifications"],
+                          "js": ["app.js"] 
+    }
+  ]
+}
