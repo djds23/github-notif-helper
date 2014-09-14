@@ -10,4 +10,4 @@ When I recieve notifications for issues in GitHub, I must mouse over the avatars
 4. Drag and drop the directory containing the repo onto the extensions window
 
 
-[Credit for the icon is thanks to Designmodo!](https://www.iconfinder.com/icons/103184/check_checkmark_ok_yes_icon)
+[Credit for the icon goes to Designmodo](https://www.iconfinder.com/icons/103184/check_checkmark_ok_yes_icon)
