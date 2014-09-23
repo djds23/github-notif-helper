@@ -10,8 +10,7 @@ function get_avatars_from_notif (notif) {
 
 function find_notifs_for_user () {
     var user_id = document.getElementsByName("octolytics-actor-id")[0].content;
-    var notifications = document.body.getElementsByClassName("boxed-group-inner list-group notifications");
-    var notifications = notifications[0].childNodes;
+    var notifications = document.body.getElementsByClassName("js-navigation-item js-notification");
     for (i=0; i<=notifications.length; i++) {
         var notif = notifications[i]
         var avatars = get_avatars_from_notif(notif);
@@ -23,8 +22,8 @@ function find_notifs_for_user () {
                     if ( user_id === new_user_id ) {
                         var icon_left = notif.parentNode.getElementsByClassName("type-icon octicon");
                         var background = notif.parentNode.getElementsByClassName("js-navigation-item");
-                        background[x].style.backgroundColor = "#FDE5E5";
-                        icon_left[x].style.color = "#F2181B";
+                        background[i].style.backgroundColor = "#FDE5E5";
+                        icon_left[i].style.color = "#F2181B";
                     }
                 }
             } 
