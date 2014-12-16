@@ -11,8 +11,8 @@ When I recieve notifications for issues in GitHub, I must mouse over the avatars
 
 #TODO: 
 
-1. allow extension to work on more than just `github.com/notifications`
-2. allow one to make notes for themselves on notifications / issues
+* allow extension to work on more than just `github.com/notifications`
+* allow one to make notes for themselves on notifications / issues
 
 
 [Credit for the icon goes to Designmodo](https://www.iconfinder.com/icons/103184/check_checkmark_ok_yes_icon)
