@@ -9,7 +9,8 @@ When I recieve notifications for issues in GitHub, I must mouse over the avatars
 3. Check the Developer mode box at the top right of this tab
 4. Drag and drop the directory containing the repo onto the extensions window
 
-TODO: 
+#TODO: 
+
 1. allow extension to work on more than just `github.com/notifications`
 2. allow one to make notes for themselves on notifications / issues
 
