@@ -8,7 +8,7 @@ function get_avatars_from_notif (notif) {
     }
 }
 
-function find_notifs_for_user () {
+(function () {
     var user_id = document.getElementsByName("octolytics-actor-id")[0].content;
     var notifications = document.body.getElementsByClassName("js-navigation-item js-notification");
     for (i=0; i<=notifications.length; i++) {
@@ -29,6 +29,17 @@ function find_notifs_for_user () {
             } 
         }
     }
+})();
+
+function addButton () {
+    var files = $("#files").find("div[id^='diff-']");
+    if (files) {
+        $.each(files, function (i, e) {
+            var action_bar = $(e).find("div.file-actions");
+            var button  = $(e).find("a.minibutton").clone(); 
+            button.appendTo(action_bar);
+        })
+    }
 }
 
-find_notifs_for_user()
+addButton();
