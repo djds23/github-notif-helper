@@ -36,7 +36,14 @@ function addButton () {
     if (files) {
         $.each(files, function (i, e) {
             var action_bar = $(e).find("div.file-actions");
+            var file_content = $(e).find("div.data");
             var button  = $(e).find("a.minibutton").clone(); 
+            button.on("click", function () {
+                file_content.hide(); 
+            })
+            button.attr("aria-label", "Hide this file");
+            button.attr("href", "#");
+            button.html("Hide");
             button.appendTo(action_bar);
         })
     }
