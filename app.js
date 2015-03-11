@@ -31,22 +31,25 @@ function get_avatars_from_notif (notif) {
     }
 })();
 
-function addButton () {
+(function () {
     var files = $("#files").find("div[id^='diff-']");
     if (files) {
         $.each(files, function (i, e) {
             var action_bar = $(e).find("div.file-actions");
             var file_content = $(e).find("div.data");
-            var button  = $('<a class="octicon-button tooltipped"></a>').clone(); 
+            var is_hidden = file_content.is(":visible");
+            var button  = $('<a class="octicon-button tooltipped tooltipped-nw"></a>').clone(); 
             button.on("click", function () {
-                file_content.hide(); 
-            })
-            button.attr("aria-label", "Hide this file");
-            button.attr("href", "");
-            button.html('<span class="octicon octicon-eye"></span>');
+                if (file_content.is(":visible")) {
+                    file_content.hide(350); 
+                } else { 
+                    file_content.show(350);
+                }
+            });
             button.appendTo(action_bar);
-        })
+            button.attr("aria-label", "Toggle this file");
+            button.html('<span class="octicon octicon-eye"></span>');
+        });
     }
-}
+})();
 
-addButton();
