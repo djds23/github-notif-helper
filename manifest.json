@@ -3,14 +3,14 @@
   "name": "github-notif-helper",
   "version": "0.0.1",
   "description": "highlights a github notification if username is mentioned",
-  "permissions": ["http://*.github.com/notifications", "https://*.github.com/notifications"],
+  "permissions": ["http://*.github.com/*", "https://*.github.com/*"],
   "icons": {"16": "icon16.png",
             "48": "icon48.png",
             "128": "icon128.png"},
   "content_scripts": [
                         {
-                          "matches": ["https://github.com/notifications"],
-                          "js": ["app.js"] 
-    }
-  ]
+                          "matches": ["*://github.com/*"],
+                          "js": ["jquery-2.1.3.min.js", "app.js"] 
+                        }
+                      ]
 }
