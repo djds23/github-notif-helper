@@ -96,6 +96,9 @@ $(document).ready(function() {
 });
 
 $(document).on('URL_CHANGE', function () {
+    if (location.href.indexOf('files') === -1){
+       return
+    } 
     var files = $("#files").find("div[id^='diff-']");
     if (files) {
         addToggle(files);
