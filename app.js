@@ -1,39 +1,20 @@
 // Notification Highlighting
-(function () {
-    function get_avatars_from_notif (notif) {
-        if (notif instanceof HTMLElement) {
-            var avatars = notif.getElementsByClassName('avatar-stack clearfix');
-            return avatars[0].getElementsByTagName('img')
-        }
-        else {
-            return false
-        }
-    }
-    
-    var user_id = document.getElementsByName("octolytics-actor-id")[0].content;
-    var notifications = document.body.getElementsByClassName("js-navigation-item js-notification");
-    
-    for (i=0; i<=notifications.length; i++) {
-        var notif = notifications[i]
-        var avatars = get_avatars_from_notif(notif);
-        
-        if (avatars) {
-            for (x=0; x<=avatars.length; x++) {
-                var avatar = avatars[x]
-        
-                if (avatar) { 
-                    var new_user_id = avatar.dataset['user']; 
-                    if ( user_id === new_user_id ) {
-                        var icon_left = notif.parentNode.getElementsByClassName("type-icon octicon");
-                        var background = notif.parentNode.getElementsByClassName("js-navigation-item");
-                        background[i].style.backgroundColor = "#FDE5E5";
-                        icon_left[i].style.color = "#F2181B";
-                    }
-                }
-            } 
-        }
-    }
-})();
+function highlightNotifs () {
+    var userId = $("meta[name=octolytics-actor-id]").attr('content');
+    var notifications = $(".js-notification");
+
+    $.each(notifications, function (_, notif) {
+        var notif = $(notif)
+        var avatars = notif.find('.avatar');
+
+        $.each(avatars, function (_, avatar)  {
+            var newUserId = avatar.dataset.user; 
+            if ( userId === newUserId ) {
+                notif.css("background-color", "#FDE5E5");
+            }
+        }); 
+    });
+}
 
 // File View Toggle
 function getCachedFiles() {
@@ -43,7 +24,7 @@ function getCachedFiles() {
 function updateCookies(visibilityBool, e) {
     var jsonViewedFiles = localStorage.getItem(location.href);
     var viewedFiles = JSON.parse(jsonViewedFiles);
-    var keyId = $(e.toElement).closest("div[id^='diff-']")[0].id;
+    var keyId = $(e.toElement).closest("div[id^='diff-']").attr('id');
     viewedFiles[keyId] = visibilityBool;
     var jsonViewedFiles = JSON.stringify(viewedFiles);
     localStorage.setItem(location.href, jsonViewedFiles);
@@ -88,18 +69,20 @@ function addToggle(files) {
 }
 
 // Trigger an event for location changes since Github does not always
-// reload the page during in repository navigation
+// reload the page during in repository navigation this snippet was 
+// taken from octotree: https://github.com/buunguyen/octotree
 $(document).ready(function() {
-    var href, hash
+    var href, hash;
     function detectLocationChange() {
         if (location.href !== href || location.hash !== hash) {
-            href = location.href
-            hash = location.hash
-            $(document).trigger('URL_CHANGE', href, hash)
+            href = location.href;
+            hash = location.hash;
+            $(document).trigger('URL_CHANGE', href, hash);
         }
-        setTimeout(detectLocationChange, 200)
+        setTimeout(detectLocationChange, 250);
     }
-    detectLocationChange()
+    highlightNotifs();
+    detectLocationChange();
 });
 
 // Listen to said event and manipulate files when we navigate
