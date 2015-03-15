@@ -1,22 +1,26 @@
-function get_avatars_from_notif (notif) {
-    if (notif instanceof HTMLElement) {
-        var avatars = notif.getElementsByClassName('avatar-stack clearfix');
-        return avatars[0].getElementsByTagName('img')
-    }
-    else {
-        return false
-    }
-}
-
+// Notification Highlighting
 (function () {
+    function get_avatars_from_notif (notif) {
+        if (notif instanceof HTMLElement) {
+            var avatars = notif.getElementsByClassName('avatar-stack clearfix');
+            return avatars[0].getElementsByTagName('img')
+        }
+        else {
+            return false
+        }
+    }
+    
     var user_id = document.getElementsByName("octolytics-actor-id")[0].content;
     var notifications = document.body.getElementsByClassName("js-navigation-item js-notification");
+    
     for (i=0; i<=notifications.length; i++) {
         var notif = notifications[i]
         var avatars = get_avatars_from_notif(notif);
+        
         if (avatars) {
             for (x=0; x<=avatars.length; x++) {
                 var avatar = avatars[x]
+        
                 if (avatar) { 
                     var new_user_id = avatar.dataset['user']; 
                     if ( user_id === new_user_id ) {
@@ -31,6 +35,7 @@ function get_avatars_from_notif (notif) {
     }
 })();
 
+// File View Toggle
 function getCachedFiles() {
     return JSON.parse(localStorage.getItem(location.href)) || {}
 }
@@ -47,33 +52,34 @@ function updateCookies(visibilityBool, e) {
 function addToggle(files) {
     var viewedFiles = getCachedFiles();
     $.each(files, function (i, e) {
-        var action_bar = $(e).find("div.file-actions");
-        var file_content = $(e).find("div.data");
-        var is_hidden = file_content.is(":visible");
+        var actionBar = $(e).find("div.file-actions");
+        var fileContent = $(e).find("div.data");
+        var isHidden = fileContent.is(":visible");
    
         var cachedView = viewedFiles[e.id];
         if (cachedView !== undefined) {
             if (!cachedView) {
-                file_content.hide(100);
+                fileContent.hide(100);
             }
         } else {
             viewedFiles[e.id] = true;
         }
 
-        if (action_bar.find("#toggle").length) {
+        if (actionBar.find("#toggle").length) {
             return
         }
         var button  = $('<a id="toggle" class="octicon-button tooltipped tooltipped-nw"></a>').clone();
         button.on("click", function (e) {
-            var visibilityBool = file_content.is(":visible");
+            var visibilityBool = fileContent.is(":visible");
+            // visibilityBool is negated so we know the state after manipulation 
             updateCookies(!visibilityBool, e);
             if (visibilityBool) {
-                file_content.hide(350); 
+                fileContent.hide(350); 
             } else { 
-                file_content.show(350);
+                fileContent.show(350);
             }
         });
-        button.appendTo(action_bar);
+        button.appendTo(actionBar);
         button.attr("aria-label", "Toggle this file");
         button.html('<span class="octicon octicon-eye"></span>');
     });
@@ -81,7 +87,8 @@ function addToggle(files) {
     localStorage.setItem(location.href, jsonViewedFiles )
 }
 
-
+// Trigger an event for location changes since Github does not always
+// reload the page during in repository navigation
 $(document).ready(function() {
     var href, hash
     function detectLocationChange() {
@@ -95,6 +102,8 @@ $(document).ready(function() {
     detectLocationChange()
 });
 
+// Listen to said event and manipulate files when we navigate
+// to the correct URL
 $(document).on('URL_CHANGE', function () {
     if (location.href.indexOf('files') === -1){
        return
