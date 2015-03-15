@@ -31,19 +31,43 @@ function get_avatars_from_notif (notif) {
     }
 })();
 
+function getCachedFiles() {
+    return JSON.parse(localStorage.getItem(location.href)) || {}
+}
+
+function updateCookies(visibilityBool, e) {
+    var jsonViewedFiles = localStorage.getItem(location.href);
+    var viewedFiles = JSON.parse(jsonViewedFiles);
+    var keyId = $(e.toElement).closest("div[id^='diff-']")[0].id;
+    viewedFiles[keyId] = visibilityBool;
+    var jsonViewedFiles = JSON.stringify(viewedFiles);
+    localStorage.setItem(location.href, jsonViewedFiles);
+}
+
 function addToggle(files) {
+    var viewedFiles = getCachedFiles();
     $.each(files, function (i, e) {
         var action_bar = $(e).find("div.file-actions");
-        
-        if (action_bar.find("#toggle-switch").length) {
-            return
-        }
-        
         var file_content = $(e).find("div.data");
         var is_hidden = file_content.is(":visible");
-        var button  = $('<a id="toggle-switch" class="octicon-button tooltipped tooltipped-nw"></a>').clone(); 
-        button.on("click", function () {
-            if (file_content.is(":visible")) {
+   
+        var cachedView = viewedFiles[e.id];
+        if (cachedView !== undefined) {
+            if (!cachedView) {
+                file_content.hide(100);
+            }
+        } else {
+            viewedFiles[e.id] = true;
+        }
+
+        if (action_bar.find("#toggle").length) {
+            return
+        }
+        var button  = $('<a id="toggle" class="octicon-button tooltipped tooltipped-nw"></a>').clone();
+        button.on("click", function (e) {
+            var visibilityBool = file_content.is(":visible");
+            updateCookies(!visibilityBool, e);
+            if (visibilityBool) {
                 file_content.hide(350); 
             } else { 
                 file_content.show(350);
@@ -53,19 +77,27 @@ function addToggle(files) {
         button.attr("aria-label", "Toggle this file");
         button.html('<span class="octicon octicon-eye"></span>');
     });
+    var jsonViewedFiles = JSON.stringify(viewedFiles);
+    localStorage.setItem(location.href, jsonViewedFiles )
 }
 
-$(document).ready(function (e) {
+
+$(document).ready(function() {
+    var href, hash
+    function detectLocationChange() {
+        if (location.href !== href || location.hash !== hash) {
+            href = location.href
+            hash = location.hash
+            $(document).trigger('URL_CHANGE', href, hash)
+        }
+        setTimeout(detectLocationChange, 200)
+    }
+    detectLocationChange()
+});
+
+$(document).on('URL_CHANGE', function () {
     var files = $("#files").find("div[id^='diff-']");
     if (files) {
         addToggle(files);
-    }
-
-    var files_button = $('[data-container-id="files_bucket"')
-    if (files_button) {
-        files_button.on("click", function () {
-            var files = $("#files").find("div[id^='diff-']");
-            addToggle(files);
-        })
     }
 });
