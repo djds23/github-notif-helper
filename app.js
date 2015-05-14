@@ -49,7 +49,7 @@ function addToggle(files) {
         if (actionBar.find("#toggle").length) {
             return
         }
-        var button  = $('<a id="toggle" class="octicon-button tooltipped tooltipped-nw"></a>').clone();
+        var button  = $('<a id="toggle" class="octicon-btn tooltipped tooltipped-nw"></a>').clone();
         button.on("click", function (e) {
             var visibilityBool = fileContent.is(":visible");
             // visibilityBool is negated so we know the state after manipulation 
