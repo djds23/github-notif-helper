@@ -21,7 +21,7 @@ function getCachedFiles() {
     return JSON.parse(localStorage.getItem(location.href)) || {}
 }
 
-function updateCookies(visibilityBool, e) {
+function updateLocalStorage(visibilityBool, e) {
     var jsonViewedFiles = localStorage.getItem(location.href);
     var viewedFiles = JSON.parse(jsonViewedFiles);
     var keyId = $(e.toElement).closest("div[id^='diff-']").attr('id');
@@ -53,7 +53,7 @@ function addToggle(files) {
         button.on("click", function (e) {
             var visibilityBool = fileContent.is(":visible");
             // visibilityBool is negated so we know the state after manipulation 
-            updateCookies(!visibilityBool, e);
+            updateLocalStorage(!visibilityBool, e);
             if (visibilityBool) {
                 fileContent.hide(350); 
             } else { 
@@ -65,7 +65,7 @@ function addToggle(files) {
         button.html('<span class="octicon octicon-eye"></span>');
     });
     var jsonViewedFiles = JSON.stringify(viewedFiles);
-    localStorage.setItem(location.href, jsonViewedFiles )
+    localStorage.setItem(location.href, jsonViewedFiles)
 }
 
 // Trigger an event for location changes since Github does not always
@@ -88,7 +88,7 @@ $(document).ready(function() {
 // Listen to said event and manipulate files when we navigate
 // to the correct URL
 $(document).on('URL_CHANGE', function () {
-    if (location.href.indexOf('files') === -1){
+    if (location.href.indexOf('files') === -1) {
        return
     } 
     var files = $("#files").find("div[id^='diff-']");
