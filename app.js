@@ -34,7 +34,7 @@ function addToggle(files) {
     var viewedFiles = getCachedFiles();
     $.each(files, function (i, e) {
         var actionBar = $(e).find("div.file-actions");
-        var fileContent = $(e).find("div.data");
+        var fileContent = $(e).find("div.data, div.render-wrapper");
         var isHidden = fileContent.is(":visible");
    
         var cachedView = viewedFiles[e.id];
