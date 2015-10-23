@@ -17,7 +17,7 @@ function updateLocalStorage(key, value) {
 
 function addToggleAll(files) {
     var buttonGroup = $('.btn-group.right');
-    var templateButton = $('<a id="toggle" class="btn btn-sm"></a>');
+    var templateButton = $('<a id="toggle-all" class="btn btn-sm"></a>');
     templateButton.html('Toggle All');
     templateButton.on('click', function (e) {
         $.each(files, function (i, e) {
@@ -30,7 +30,7 @@ function addToggleAll(files) {
 
 function addToggle(files) {
     var viewedFiles = getCachedFiles();
-    $.each(files, function (i, e) {
+    files.each( function (i, e) {
         var actionBar = $(e).find("div.file-actions");
         var fileContent = $(e).find("div.data, div.render-wrapper");
         var cachedView = viewedFiles[e.id];
@@ -46,7 +46,7 @@ function addToggle(files) {
 
         var button  = $('<a id="toggle" class="octicon-btn tooltipped tooltipped-nw"></a>').clone();
         button.on("click", function (e) {
-            var visibilityBool = toggleVisibility(fileContent); 
+            var visibilityBool = toggleVisibility(fileContent);
             updateLocalStorage(getKeyIdFromElement(e), visibilityBool);
         });
         button.appendTo(actionBar);
@@ -61,15 +61,15 @@ function toggleVisibility(fileContent) {
     // Toggle visibility and return the new visibility state of the element
     var visibilityBool = fileContent.is(":visible");
     if (visibilityBool) {
-        fileContent.hide(350); 
-    } else { 
+        fileContent.hide(350);
+    } else {
         fileContent.show(350);
-    } 
+    }
     return !visibilityBool;
 }
 
 // Trigger an event for location changes since Github does not always
-// reload the page during in repository navigation this snippet was 
+// reload the page during in repository navigation this snippet was
 // taken from octotree: https://github.com/buunguyen/octotree
 $(document).ready(function() {
     var href, hash;
@@ -89,11 +89,14 @@ $(document).ready(function() {
 $(document).on('URL_CHANGE', function () {
     if (location.href.indexOf('files') === -1) {
        return
-    } 
+    }
     var files = $("#files").find("div[id^='diff-']");
     if (files) {
+        // Add toggle eyeballs
         addToggle(files);
-        addToggleAll(files);
+        if (!$('#toggle-all').length) {
+            addToggleAll(files);
+        }
     }
 });
 
