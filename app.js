@@ -8,11 +8,16 @@ function getKeyIdFromElement(element) {
 }
 
 function updateLocalStorage(key, value) {
-    var sotredJsonObject = localStorage.getItem(location.href);
-    var pageSpecificJsonCache = JSON.parse(sotredJsonObject);
+    if (key === undefined) {
+        console.log('key is undefined')
+        return false
+    }
+    var storedJsonObject = localStorage.getItem(location.href);
+    var pageSpecificJsonCache = JSON.parse(storedJsonObject);
     pageSpecificJsonCache[key] = value;
     var sotredJsonObject = JSON.stringify(pageSpecificJsonCache);
     localStorage.setItem(location.href, sotredJsonObject);
+    return true
 }
 
 function addToggleAll(files) {
