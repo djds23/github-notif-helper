@@ -96,10 +96,12 @@ $(document).on('URL_CHANGE', function () {
        return
     }
     var files = $("#files").find("div[id^='diff-']");
-    if (files) {
+    // If we find files
+    if (files.length) {
         // Add toggle eyeballs
         addToggle(files);
         if (!$('#toggle-all').length) {
+            // And add a toggle-all if it does not exist already
             addToggleAll(files);
         }
     }

@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Github Workflow",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "An extension that allows you to hide files in pull requests and adds highlighting for notifications.",
   "permissions": [ "https://github.com/*", "storage" ],
   "icons": {"16": "icon16.png",
@@ -9,6 +9,7 @@
             "128": "icon128.png"},
   "content_scripts": [{
       "matches": ["https://github.com/*"],
-      "js": ["jquery-2.1.3.min.js", "app.js"] 
+      "js": ["jquery-2.1.3.min.js", "app.js"]
     }]
 }
+
