@@ -1,5 +1,30 @@
 // General utility functions
 var utils = Object.freeze({
+    storePullView: function storePullView(url, branchName) {
+        var pulls = utils.getRecentlyViewedPulls();
+        if (pulls.length > 5) {
+            pulls.pop();
+        }
+        var view = {
+            url: url,
+            branchName: branchName
+        }
+
+        $.each(pulls, function(i, e) {
+            if (this.branchName == view.branchName) {
+                pulls.splice(i, 1);
+            }
+        });
+
+        pulls.unshift(view);
+        localStorage.setItem('PULLS', JSON.stringify(pulls));
+        return pulls;
+    },
+
+    getRecentlyViewedPulls: function recentlyViewedPulls() {
+        return JSON.parse(localStorage.getItem('PULLS')) || [];
+    },
+
     getFiles: function getFiles() {
         return $("#files").find("div[id^='diff-']");
     },
@@ -106,9 +131,15 @@ $(document).ready(function() {
 // Listen to said event and manipulate files when we navigate
 // to the correct URL
 $(document).on('URL_CHANGE', function () {
+    if (location.href.indexOf('pull') === -1) {
+        utils.storePullView(location.href, $('.current-branch').last().text());
+        console.log(utils.getRecentlyViewedPulls());
+    }
+
     if (location.href.indexOf('files') === -1) {
        return;
     }
+
     var files = utils.getFiles();
     // If we find files
     if (files.length) {
