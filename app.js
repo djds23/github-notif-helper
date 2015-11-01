@@ -1,5 +1,9 @@
 // General utility functions
 var utils = Object.freeze({
+    getFiles: function getFiles() {
+        return $("#files").find("div[id^='diff-']");
+    },
+
     getCachedFiles: function getCachedFiles() {
         return JSON.parse(localStorage.getItem(location.href)) || {};
     },
@@ -103,9 +107,9 @@ $(document).ready(function() {
 // to the correct URL
 $(document).on('URL_CHANGE', function () {
     if (location.href.indexOf('files') === -1) {
-       return
+       return;
     }
-    var files = $("#files").find("div[id^='diff-']");
+    var files = utils.getFiles();
     // If we find files
     if (files.length) {
         // Add toggle eyeballs
