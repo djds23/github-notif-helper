@@ -1,77 +1,87 @@
-// File View Toggle
-function getCachedFiles() {
-    return JSON.parse(localStorage.getItem(location.href)) || {};
-}
+// General utility functions
+var utils = Object.freeze({
+    getCachedFiles: function getCachedFiles() {
+        return JSON.parse(localStorage.getItem(location.href)) || {};
+    },
 
-function getKeyIdFromElement(element) {
-    return $(element.toElement).closest("div[id^='diff-']").attr('id');
-}
+    getKeyIdFromElement: function getKeyIdFromElement(element) {
+        return $(element.toElement).closest("div[id^='diff-']").attr('id');
+    },
 
-function updateLocalStorage(key, value) {
-    if (key === undefined) {
-        console.log('key is undefined')
-        return false
+    updateLocalStorage: function updateLocalStorage(key, value) {
+        if (key === undefined) {
+            console.log('key is undefined');
+            return false;
+        }
+        var storedJsonObject = localStorage.getItem(location.href);
+        var pageSpecificJsonCache = JSON.parse(storedJsonObject);
+        pageSpecificJsonCache[key] = value;
+        var sotredJsonObject = JSON.stringify(pageSpecificJsonCache);
+        localStorage.setItem(location.href, sotredJsonObject);
+        return true;
+    },
+
+    addToggleButtonForElement: function addToggleButtonForElement(element) {
+        var $element = $(element)
+        var actionBar = $element.find("div.file-actions");
+        var fileContent = $element.find("div.data, div.render-wrapper");
+        if (actionBar.find("#toggle").length) {
+            return fileContent; // Short circuit if the toggle exists
+        }
+
+        var button  = $('<a id="toggle" class="octicon-btn tooltipped tooltipped-nw"></a>');
+        button.on("click", function (e) {
+            var visibilityBool = utils.toggleVisibility(fileContent);
+            utils.updateLocalStorage(utils.getKeyIdFromElement(e), visibilityBool);
+        });
+
+        button.appendTo(actionBar);
+        button.attr("aria-label", "Toggle this file");
+        button.html('<span class="octicon octicon-eye"></span>');
+        return fileContent;
+    },
+
+    toggleVisibility: function toggleVisibility(fileContent) {
+        // Toggle visibility and return the new visibility state of the element
+        var visibilityBool = fileContent.is(":visible");
+        if (visibilityBool) {
+            fileContent.hide(350);
+        } else {
+            fileContent.show(350);
+        }
+        return !visibilityBool;
     }
-    var storedJsonObject = localStorage.getItem(location.href);
-    var pageSpecificJsonCache = JSON.parse(storedJsonObject);
-    pageSpecificJsonCache[key] = value;
-    var sotredJsonObject = JSON.stringify(pageSpecificJsonCache);
-    localStorage.setItem(location.href, sotredJsonObject);
-    return true
-}
+});
+
 
 function addToggleAll(files) {
     var buttonGroup = $('.btn-group.right');
     var templateButton = $('<a id="toggle-all" class="btn btn-sm"></a>');
     templateButton.html('Toggle All');
     templateButton.on('click', function (e) {
-        $.each(files, function (i, e) {
+        files.each(function (i, e) {
             var fileContent = $(e).find("div.data, div.render-wrapper");
-            toggleVisibility(fileContent);
+            utils.toggleVisibility(fileContent);
         });
     });
     templateButton.appendTo(buttonGroup);
 }
 
 function addToggle(files) {
-    var viewedFiles = getCachedFiles();
-    files.each( function (i, e) {
-        var actionBar = $(e).find("div.file-actions");
-        var fileContent = $(e).find("div.data, div.render-wrapper");
-        var cachedView = viewedFiles[e.id];
-
-        if (cachedView !== undefined && !cachedView) {
+    var viewedFiles = utils.getCachedFiles();
+    files.each(function (i, e) {
+        var cachedView = viewedFiles[this.id];
+        var fileContent = utils.addToggleButtonForElement(this);
+        if (cachedView === false) {
             fileContent.hide(100);
         } else {
-            viewedFiles[e.id] = true;
+            viewedFiles[this.id] = true;
         }
-        if (actionBar.find("#toggle").length) {
-            return;
-        }
-
-        var button  = $('<a id="toggle" class="octicon-btn tooltipped tooltipped-nw"></a>').clone();
-        button.on("click", function (e) {
-            var visibilityBool = toggleVisibility(fileContent);
-            updateLocalStorage(getKeyIdFromElement(e), visibilityBool);
-        });
-        button.appendTo(actionBar);
-        button.attr("aria-label", "Toggle this file");
-        button.html('<span class="octicon octicon-eye"></span>');
     });
     var jsonViewedFiles = JSON.stringify(viewedFiles);
     localStorage.setItem(location.href, jsonViewedFiles)
 }
 
-function toggleVisibility(fileContent) {
-    // Toggle visibility and return the new visibility state of the element
-    var visibilityBool = fileContent.is(":visible");
-    if (visibilityBool) {
-        fileContent.hide(350);
-    } else {
-        fileContent.show(350);
-    }
-    return !visibilityBool;
-}
 
 // Trigger an event for location changes since Github does not always
 // reload the page during in repository navigation this snippet was
