@@ -1,5 +1,47 @@
+// Events
+var visibilityEvents = Object.freeze((function () {
+    return {
+    UPDATE: function (build) {
+        var event = jQuery.Event('TOGGLE_VISIBILITY');
+        event.build = build;
+        return event;
+    }
+}})());
+
+// "Model" for background.js
+var backgroundPort = Object.freeze((function (){
+    return {
+    getFileViewData: function getFileViewData() {
+        var port = chrome.runtime.connect();
+
+        port.postMessage({build: location.href});
+
+        $(document).on(visibilityEvents.UPDATE(), function (event) {
+             console.log('vis toggled');
+             port.postMessage({
+                 url: location.href,
+                 build: event.build
+             });
+        });
+
+        port.onMessage.addListener(function msg(msg) {
+            console.log('INCOMING MESSAGE');
+            console.log(msg);
+            if (msg.build !== undefined) {
+                this.build = msg.build
+            }
+        }.bind(this));
+        return port;
+    }.bind(this),
+
+    build: function () {
+        return this.build;
+    }.bind(this)
+}})());
+
 // General utility functions
-var utils = Object.freeze({
+var utils = Object.freeze((function (){
+    return {
     storePullView: function storePullView(url, branchName) {
         var pulls = utils.getRecentlyViewedPulls();
         if (pulls.length > 5) {
@@ -33,8 +75,8 @@ var utils = Object.freeze({
         return JSON.parse(localStorage.getItem(location.href)) || {};
     },
 
-    getKeyIdFromElement: function getKeyIdFromElement(element) {
-        return $(element.toElement).closest("div[id^='diff-']").attr('id');
+    getKeyIdFromEvent: function getKeyIdFromEvent(event) {
+        return $(event.toElement).closest("div[id^='diff-']").attr('id');
     },
 
     updateLocalStorage: function updateLocalStorage(key, value) {
@@ -60,8 +102,9 @@ var utils = Object.freeze({
 
         var button  = $('<a id="toggle" class="octicon-btn tooltipped tooltipped-nw"></a>');
         button.on("click", function (e) {
+            $(e.toElement).trigger(visibilityEvents.UPDATE());
             var visibilityBool = utils.toggleVisibility(fileContent);
-            utils.updateLocalStorage(utils.getKeyIdFromElement(e), visibilityBool);
+            utils.updateLocalStorage(utils.getKeyIdFromEvent(e), visibilityBool);
         });
 
         button.appendTo(actionBar);
@@ -80,7 +123,7 @@ var utils = Object.freeze({
         }
         return !visibilityBool;
     }
-});
+}})());
 
 
 function addToggleAll(files) {
@@ -137,7 +180,8 @@ $(document).on('URL_CHANGE', function () {
     }
 
     if (location.href.indexOf('files') === -1) {
-       return;
+        backgroundPort.getFileViewData();
+        return;
     }
 
     var files = utils.getFiles();
