@@ -22,9 +22,10 @@ $ npm install
 $ gulp
 ```
 
-From here you can load the `dist/` directory into chrome as an unpacked extension.
+From here you can load the `dev/` directory into chrome as an unpacked extension. This build will provide you with source maps for the minified code.
 
 As you edit the files in `src/`, run gulp to build the code and reload the extension to see your changes.
+
 
 [Credit for the icon goes to Designmodo](https://www.iconfinder.com/icons/103184/check_checkmark_ok_yes_icon)
 
