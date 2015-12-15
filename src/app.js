@@ -1,6 +1,17 @@
 import Utils from './utils/utils.js';
 import $ from 'jquery';
 
+function addToggleComments() {
+    var buttonGroup = $('.btn-group.right');
+    var templateButton = $('<a id="toggle-comments" class="btn btn-sm"></a>');
+    templateButton.html('Hide Comments');
+    templateButton.on('click', function (e) {
+        $('tr.inline-comments').hide();
+        $('add-line-comment').hide();
+    });
+    templateButton.appendTo(buttonGroup);
+}
+
 function addToggleAll(files) {
     var buttonGroup = $('.btn-group.right');
     var templateButton = $('<a id="toggle-all" class="btn btn-sm"></a>');
@@ -60,6 +71,10 @@ $(document).on('URL_CHANGE', function () {
         if (!$('#toggle-all').length) {
             // And add a toggle-all if it does not exist already
             addToggleAll(files);
+        }
+        if (!$('#toggle-comments').length) {
+          debugger;
+            addToggleComments();
         }
     }
 });
