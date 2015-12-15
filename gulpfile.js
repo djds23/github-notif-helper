@@ -31,7 +31,6 @@ gulp.task('release', function () {
   // set up the browserify instance on a task basis
   var b = browserify({
     entries: './src/app.js',
-    debug: true,
   }).transform("babelify", { presets: ["es2015"] });
 
   return b.bundle()
@@ -42,3 +41,4 @@ gulp.task('release', function () {
         .on('error', gutil.log)
     .pipe(gulp.dest('./dist/'));
 });
+
