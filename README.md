@@ -9,5 +9,22 @@ We also use Github for code reviews. This extension allows users to hide files i
 
 [Install Github Workflow from the Chrome Web Store!](http://bit.ly/1MKUxmg)
 
+#Fork & Contribute
+
+This project was built with ES2015 and Babel, using Gulp as our build tool.
+
+For these to run, you must first install Node, then Gulp globally.
+
+Once that is done, you can download the dependencies with
+
+```
+npm install 
+gulp
+```
+
+From here you can load the `dist/` directory into chrome as an unpacked extension.
+
+As you edit the files in `src/`, run gulp to build the code and reload the extension to see your changes.
+
 [Credit for the icon goes to Designmodo](https://www.iconfinder.com/icons/103184/check_checkmark_ok_yes_icon)
 
