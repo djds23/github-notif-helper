@@ -11,11 +11,11 @@ We also use Github for code reviews. This extension allows users to hide files i
 
 #Fork & Contribute
 
-This project was built with ES2015 and Babel, using Gulp as our build tool.
+This project was built with ES2015 and Babel, using Gulp as the build tool.
 
 For these to run, you must first install Node, then Gulp globally.
 
-Once that is done, you can download the dependencies with
+Once that is done, you can download the dependencies and build the project with the following commands:
 
 ```shell
 $ npm install
