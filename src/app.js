@@ -59,7 +59,7 @@ $(document).ready(() => {
 
 // Listen to said event and manipulate files when we navigate
 // to the correct URL
-$(document).on('URL_CHANGE', function () {
+$(document).on('URL_CHANGE', () => {
     if (location.href.indexOf('files') === -1) {
        return
     }
