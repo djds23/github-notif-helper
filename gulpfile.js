@@ -24,5 +24,21 @@ gulp.task('default', function () {
         .pipe(uglify())
         .on('error', gutil.log)
     .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('./dev/'));
+});
+
+gulp.task('release', function () {
+  // set up the browserify instance on a task basis
+  var b = browserify({
+    entries: './src/app.js',
+    debug: true,
+  }).transform("babelify", { presets: ["es2015"] });
+
+  return b.bundle()
+    .pipe(source('./app/app.js'))
+    .pipe(buffer())
+        // Add transformation tasks to the pipeline here.
+        .pipe(uglify())
+        .on('error', gutil.log)
     .pipe(gulp.dest('./dist/'));
 });
