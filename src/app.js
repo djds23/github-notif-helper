@@ -2,10 +2,10 @@ import Utils from './utils/utils.js';
 import $ from 'jquery';
 
 function addToggleComments() {
-    var buttonGroup = $('.btn-group.right');
-    var templateButton = $('<a id="toggle-comments" class="btn btn-sm"></a>');
+    let buttonGroup = $('.btn-group.right');
+    let templateButton = $('<a id="toggle-comments" class="btn btn-sm"></a>');
     templateButton.html('Hide Comments');
-    templateButton.on('click', function (e) {
+    templateButton.on('click', (e) => {
         $('tr.inline-comments').hide();
         $('add-line-comment').hide();
     });
@@ -13,12 +13,12 @@ function addToggleComments() {
 }
 
 function addToggleAll(files) {
-    var buttonGroup = $('.btn-group.right');
-    var templateButton = $('<a id="toggle-all" class="btn btn-sm"></a>');
+    let buttonGroup = $('.btn-group.right');
+    let templateButton = $('<a id="toggle-all" class="btn btn-sm"></a>');
     templateButton.html('Toggle All');
-    templateButton.on('click', function (e) {
-        files.each(function (i, e) {
-            var fileContent = $(e).find("div.data, div.render-wrapper");
+    templateButton.on('click',  (e) => {
+        files.each((i, e) => {
+            let fileContent = $(e).find("div.data, div.render-wrapper");
             Utils.toggleVisibility(fileContent);
         });
     });
@@ -26,17 +26,17 @@ function addToggleAll(files) {
 }
 
 function addToggle(files) {
-    var viewedFiles = Utils.getCachedFiles();
-    files.each(function (i, e) {
-        var cachedView = viewedFiles[this.id];
-        var fileContent = Utils.addToggleButtonForElement(this);
+    let viewedFiles = Utils.getCachedFiles();
+    files.each((i, e) => {
+        let cachedView = viewedFiles[this.id];
+        let fileContent = Utils.addToggleButtonForElement(this);
         if (cachedView === false) {
             fileContent.hide(100);
         } else {
             viewedFiles[this.id] = true;
         }
     });
-    var jsonViewedFiles = JSON.stringify(viewedFiles);
+    let jsonViewedFiles = JSON.stringify(viewedFiles);
     localStorage.setItem(location.href, jsonViewedFiles)
 }
 
@@ -44,8 +44,8 @@ function addToggle(files) {
 // Trigger an event for location changes since Github does not always
 // reload the page during in repository navigation this snippet was
 // taken from octotree: https://github.com/buunguyen/octotree
-$(document).ready(function() {
-    var href, hash;
+$(document).ready(() => {
+    let href, hash;
     function detectLocationChange() {
         if (location.href !== href || location.hash !== hash) {
             href = location.href;
@@ -63,7 +63,7 @@ $(document).on('URL_CHANGE', function () {
     if (location.href.indexOf('files') === -1) {
        return
     }
-    var files = $("#files").find("div[id^='diff-']");
+    let files = $("#files").find("div[id^='diff-']");
     // If we find files
     if (files.length) {
         // Add toggle eyeballs
@@ -73,7 +73,6 @@ $(document).on('URL_CHANGE', function () {
             addToggleAll(files);
         }
         if (!$('#toggle-comments').length) {
-          debugger;
             addToggleComments();
         }
     }
