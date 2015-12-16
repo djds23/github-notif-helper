@@ -1,6 +1,13 @@
 import $ from 'jquery';
 
+/**
+ * Utils class, holds all convenience methods for project.
+ * @author Dean Silfen
+ */
 class Utils {
+    /**
+     * @return {object} containing items stored in local storage for a page
+     */
     static getCachedFiles() {
         return JSON.parse(localStorage.getItem(location.href)) || {};
     }
