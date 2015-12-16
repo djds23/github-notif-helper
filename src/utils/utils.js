@@ -6,7 +6,8 @@ import $ from 'jquery';
  */
 class Utils {
     /**
-     * @return {object} containing items stored in local storage for a page
+     * @return {Map<string, Map<string, boolean>>} map of maps, Url of the PR is
+     *   the key, returns a map of files and their visibility value.
      */
     static getCachedFiles() {
         return JSON.parse(localStorage.getItem(location.href)) || {};
