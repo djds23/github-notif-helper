@@ -5,7 +5,7 @@ function addToggleComments() {
     let buttonGroup = $('.btn-group.right');
     let templateButton = $('<a id="toggle-comments" class="btn btn-sm"></a>');
     templateButton.html('Hide Comments');
-    templateButton.on('click', (e) => {
+    templateButton.on('click', (_) => {
         $('tr.inline-comments').hide();
         $('add-line-comment').hide();
     });
@@ -16,9 +16,9 @@ function addToggleAll(files) {
     let buttonGroup = $('.btn-group.right');
     let templateButton = $('<a id="toggle-all" class="btn btn-sm"></a>');
     templateButton.html('Toggle All');
-    templateButton.on('click',  (e) => {
-        files.each((i, e) => {
-            let fileContent = $(e).find("div.data, div.render-wrapper");
+    templateButton.on('click',  (event) => {
+        files.each((i, element) => {
+            let fileContent = $(element).find("div.data, div.render-wrapper");
             Utils.toggleVisibility(fileContent);
         });
     });
@@ -27,13 +27,13 @@ function addToggleAll(files) {
 
 function addToggle(files) {
     let viewedFiles = Utils.getCachedFiles();
-    files.each((i, e) => {
-        let cachedView = viewedFiles[this.id];
-        let fileContent = Utils.addToggleButtonForElement(this);
+    files.each((i, element) => {
+        let cachedView = viewedFiles[element.id];
+        let fileContent = Utils.addToggleButtonForElement(element);
         if (cachedView === false) {
             fileContent.hide(100);
         } else {
-            viewedFiles[this.id] = true;
+            viewedFiles[element.id] = true;
         }
     });
     let jsonViewedFiles = JSON.stringify(viewedFiles);
