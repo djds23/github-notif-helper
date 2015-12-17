@@ -64,7 +64,7 @@ class Utils {
     }
 
     /**
-     * @param {jQuery} fileContent - jQuery div containing the diff for the file.
+     * @param  {jQuery} fileContent - jQuery div containing the diff for the file.
      * @return {boolean}  true if the file should be visible on page load.
      *   false if the file should be hidden.
      */
