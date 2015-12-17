@@ -26,6 +26,8 @@ From here you can load the `dev/` directory into chrome as an unpacked extension
 
 As you edit the files in `src/`, run gulp to build the code and reload the extension to see your changes.
 
+[If you would like to get a feel for the code, check out the ESDOC for it here.](https://doc.esdoc.org/github.com/djds23/github-notif-helper/)
+
 
 [Credit for the icon goes to Designmodo](https://www.iconfinder.com/icons/103184/check_checkmark_ok_yes_icon)
 
