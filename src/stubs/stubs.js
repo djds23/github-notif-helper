@@ -15,4 +15,9 @@
  * @external {jQuery} http://api.jquery.com/Types/#jQuery
  */
 
+/**
+ * @external {Selector} http://api.jquery.com/Types/#Selector
+ */
+
+
 

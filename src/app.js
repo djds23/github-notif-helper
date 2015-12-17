@@ -4,14 +4,13 @@ import $ from 'jquery';
 
 const EventFileInView = 'FILES_IN_VIEW';
 
-$(document).ready(() => {
+/**
+ * @emits {EventFileInView} emits EventFileInView event when on the 'files'
+ *   tab of a Pull Request.
+ */
+function readyFunction() {
     let href;
     let hash;
-
-    /**
-     * @emits {EventFileInView} emits EventFileInView event when on the 'files'
-     *   tab of a Pull Request.
-     */
     function triggerLocationChange() {
         if (location.href !== href || location.hash !== hash) {
             href = location.href;
@@ -24,8 +23,9 @@ $(document).ready(() => {
         setTimeout(triggerLocationChange, 250);
     }
     triggerLocationChange();
-});
+}
 
+$(document).ready(readyFunction);
 $(document).on(EventFileInView, Initializers.addToggle);
 $(document).on(EventFileInView, Initializers.addToggleAll);
 $(document).on(EventFileInView, Initializers.addToggleComments);
