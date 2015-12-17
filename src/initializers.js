@@ -1,7 +1,17 @@
 import Utils from './utils/utils.js';
 import $ from 'jquery';
 
+/**
+ * Initializers class that holds all functions to listen to app events
+ * @author Dean Silfen
+ */
 class Initializers {
+
+    /**
+     * @listens {EventFileInView} Listens to this event to add toggle comments button
+     * @param   {Event} event - triggered from url change
+     * @param   {Selector} files - all file div's on the page
+     */
     static addToggleComments(event, files) {
         if (!files.length || $('#toggle-comments').length) {
           return;
@@ -17,6 +27,11 @@ class Initializers {
         templateButton.appendTo(buttonGroup);
     }
 
+    /**
+     * @listens {EventFileInView} Listens to this event to add toggle all files button
+     * @param   {Event} event - triggered from url change
+     * @param   {Selector} files - all file div's on the page
+     */
     static addToggleAll(event, files) {
         if (!files.length || $('#toggle-all').length) {
           return;
@@ -25,7 +40,7 @@ class Initializers {
         let buttonGroup = $('.btn-group.right');
         let templateButton = $('<a id="toggle-all" class="btn btn-sm"></a>');
         templateButton.html('Toggle All');
-        templateButton.on('click',  (event) => {
+        templateButton.on('click',  (clickEvent) => {
             files.each((i, element) => {
                 let fileContent = $(element).find("div.data, div.render-wrapper");
                 Utils.toggleVisibility(fileContent);
@@ -34,6 +49,11 @@ class Initializers {
         templateButton.appendTo(buttonGroup);
     }
 
+    /**
+     * @listens {EventFileInView} Listens to this event to add toggle button on file action bar
+     * @param   {Event} event - triggered from url change
+     * @param   {Selector} files - all file div's on the page
+     */
     static addToggle(event, files) {
         if (!files.length) {
           return;
@@ -54,3 +74,4 @@ class Initializers {
 }
 
 export default Initializers
+

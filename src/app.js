@@ -2,18 +2,23 @@ import Utils from './utils/utils.js';
 import Initializers from './initializers.js';
 import $ from 'jquery';
 
-const EVENT_FILE_IN_VIEW = 'FILES_IN_VIEW';
+const EventFileInView = 'FILES_IN_VIEW';
 
 $(document).ready(() => {
     let href;
     let hash;
+
+    /**
+     * @emits {EventFileInView} emits EventFileInView event when on the 'files'
+     *   tab of a Pull Request.
+     */
     function triggerLocationChange() {
         if (location.href !== href || location.hash !== hash) {
             href = location.href;
             hash = location.hash;
             if (location.href.indexOf('files') !== -1) {
                 let files = $("#files").find("div[id^='diff-']");
-                $(document).trigger(EVENT_FILE_IN_VIEW, [files]);
+                $(document).trigger(EventFileInView, [files]);
             }
         }
         setTimeout(triggerLocationChange, 250);
@@ -21,7 +26,7 @@ $(document).ready(() => {
     triggerLocationChange();
 });
 
-$(document).on(EVENT_FILE_IN_VIEW, Initializers.addToggle);
-$(document).on(EVENT_FILE_IN_VIEW, Initializers.addToggleAll);
-$(document).on(EVENT_FILE_IN_VIEW, Initializers.addToggleComments);
+$(document).on(EventFileInView, Initializers.addToggle);
+$(document).on(EventFileInView, Initializers.addToggleAll);
+$(document).on(EventFileInView, Initializers.addToggleComments);
 
