@@ -6,4 +6,5 @@ npm-debug.log
 node_modules/
 dev/app/*
 dist/app/*
+esdoc/
 
