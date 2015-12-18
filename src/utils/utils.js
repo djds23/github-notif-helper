@@ -58,7 +58,7 @@ class Utils {
         });
 
         button.appendTo(actionBar);
-        button.attr("aria-label", "Toggle Utils file");
+        button.attr("aria-label", "Toggle this file");
         button.html('<span class="octicon octicon-eye"></span>');
         return fileContent;
     }
