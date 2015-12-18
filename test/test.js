@@ -1,10 +1,17 @@
-import assert from 'assert';
+import {assert, expect} from 'chai';
+import jsdom from 'mocha-jsdom';
 
-describe('Array', function() {
-  describe('#indexOf()', function () {
-    it('should return -1 when the value is not present', function () {
-      assert.equal(-1, [1,2,3].indexOf(5));
-      assert.equal(-1, [1,2,3].indexOf(0));
-    });
-  });
+import Utils from '../src/utils/utils.js';
+import $ from 'jquery';
+
+
+describe('Utils', function () {
+  jsdom()
+  describe('#toggleVisibility', function () {
+    it('has document', function () {
+      var div = $(document.createElement('div'));
+      expect(Utils.toggleVisibility(div)).to.be.true;
+      expect(1).to.equal('true');
+    })
+  })
 });

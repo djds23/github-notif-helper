@@ -1,0 +1,203 @@
+{
+  "type": "Program",
+  "body": [],
+  "sourceType": "module",
+  "range": [
+    405,
+    405
+  ],
+  "loc": {
+    "start": {
+      "line": 24,
+      "column": 0
+    },
+    "end": {
+      "line": 24,
+      "column": 0
+    }
+  },
+  "leadingComments": [
+    {
+      "type": "Block",
+      "value": "*\n * File to hold all of the stubs for ESDOC.\n * @author Dean Silfen\n ",
+      "range": [
+        0,
+        74
+      ],
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 4,
+          "column": 3
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n * @external {MouseEvent} https://developer.mozilla.org/en/docs/Web/API/MouseEvent\n ",
+      "range": [
+        76,
+        166
+      ],
+      "loc": {
+        "start": {
+          "line": 6,
+          "column": 0
+        },
+        "end": {
+          "line": 8,
+          "column": 3
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n * @external {HTMLElement} https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement\n ",
+      "range": [
+        168,
+        263
+      ],
+      "loc": {
+        "start": {
+          "line": 10,
+          "column": 0
+        },
+        "end": {
+          "line": 12,
+          "column": 3
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n * @external {jQuery} http://api.jquery.com/Types/#jQuery\n ",
+      "range": [
+        265,
+        330
+      ],
+      "loc": {
+        "start": {
+          "line": 14,
+          "column": 0
+        },
+        "end": {
+          "line": 16,
+          "column": 3
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n * @external {Selector} http://api.jquery.com/Types/#Selector\n ",
+      "range": [
+        332,
+        401
+      ],
+      "loc": {
+        "start": {
+          "line": 18,
+          "column": 0
+        },
+        "end": {
+          "line": 20,
+          "column": 3
+        }
+      }
+    }
+  ],
+  "comments": [
+    {
+      "type": "Block",
+      "value": "*\n * File to hold all of the stubs for ESDOC.\n * @author Dean Silfen\n ",
+      "range": [
+        0,
+        74
+      ],
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 4,
+          "column": 3
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n * @external {MouseEvent} https://developer.mozilla.org/en/docs/Web/API/MouseEvent\n ",
+      "range": [
+        76,
+        166
+      ],
+      "loc": {
+        "start": {
+          "line": 6,
+          "column": 0
+        },
+        "end": {
+          "line": 8,
+          "column": 3
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n * @external {HTMLElement} https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement\n ",
+      "range": [
+        168,
+        263
+      ],
+      "loc": {
+        "start": {
+          "line": 10,
+          "column": 0
+        },
+        "end": {
+          "line": 12,
+          "column": 3
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n * @external {jQuery} http://api.jquery.com/Types/#jQuery\n ",
+      "range": [
+        265,
+        330
+      ],
+      "loc": {
+        "start": {
+          "line": 14,
+          "column": 0
+        },
+        "end": {
+          "line": 16,
+          "column": 3
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n * @external {Selector} http://api.jquery.com/Types/#Selector\n ",
+      "range": [
+        332,
+        401
+      ],
+      "loc": {
+        "start": {
+          "line": 18,
+          "column": 0
+        },
+        "end": {
+          "line": 20,
+          "column": 3
+        }
+      }
+    }
+  ]
+}

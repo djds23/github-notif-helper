@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/utils/utils.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/djds23/github-notif-helper.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/initializers.js~Initializers.html">Initializers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-initializers">initializers</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">stubs</div><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement">HTMLElement</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://developer.mozilla.org/en/docs/Web/API/MouseEvent">MouseEvent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="http://api.jquery.com/Types/#Selector">Selector</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="http://api.jquery.com/Types/#jQuery">jQuery</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">utils</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/utils/utils.js~Utils.html">Utils</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-utils">utils</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/utils/utils.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import $ from &apos;jquery&apos;;
+
+/**
+ * Utils class, holds all convenience methods for project.
+ * @author Dean Silfen
+ */
+class Utils {
+    /**
+     * @return {Object&lt;string, boolean&gt;} the ID of each diff and it&apos;s visibility bool.
+     */
+    static getCachedFiles() {
+        return JSON.parse(localStorage.getItem(location.href)) || {};
+    }
+
+    /**
+     * @param  {MouseEvent} clickEvent - Click event from a file&apos;s action bar.
+     * @return {string} ID of the file from the file&apos;s Github page.
+     */
+    static getKeyIdFromElement(clickEvent) {
+        return $(clickEvent.toElement).closest(&quot;div[id^=&apos;diff-&apos;]&quot;).attr(&apos;id&apos;);
+    }
+
+    /**
+     * @param  {string} fileId - fileId of the file from the file&apos;s Github page.
+     * @param  {boolean} visibilityBool - true if the file should be visible on page load.
+     *   false if the file should be hidden.
+     * @return {boolean} true if the visibility was properly saved.
+     */
+    static updateLocalStorage(fileId, visibilityBool) {
+        if (fileId === undefined) {
+            console.log(&apos;fileId is undefined&apos;);
+            return false;
+        }
+        let storedJsonObject = localStorage.getItem(location.href);
+        let pageSpecificJsonCache = JSON.parse(storedJsonObject);
+        pageSpecificJsonCache[fileId] = visibilityBool;
+        let sotredJsonObject = JSON.stringify(pageSpecificJsonCache);
+        localStorage.setItem(location.href, sotredJsonObject);
+        return true;
+    }
+
+    /**
+     * @param  {HTMLElement} element - File container from pull page.
+     * @return {jQuery} jQuery div containing the diff for the file.
+     */
+    static addToggleButtonForElement(element) {
+        let $element = $(element)
+        let actionBar = $element.find(&quot;div.file-actions&quot;);
+        let fileContent = $element.find(&quot;div.data, div.render-wrapper&quot;);
+        if (actionBar.find(&quot;#toggle&quot;).length) {
+            return fileContent; // Short circuit if the toggle exists
+        }
+
+        let button  = $(&apos;&lt;a id=&quot;toggle&quot; class=&quot;octicon-btn tooltipped tooltipped-nw&quot;&gt;&lt;/a&gt;&apos;);
+        button.on(&quot;click&quot;, (event) =&gt; {
+            let visibilityBool = Utils.toggleVisibility(fileContent);
+            Utils.updateLocalStorage(Utils.getKeyIdFromElement(event), visibilityBool);
+        });
+
+        button.appendTo(actionBar);
+        button.attr(&quot;aria-label&quot;, &quot;Toggle Utils file&quot;);
+        button.html(&apos;&lt;span class=&quot;octicon octicon-eye&quot;&gt;&lt;/span&gt;&apos;);
+        return fileContent;
+    }
+
+    /**
+     * @param  {jQuery} fileContent - jQuery div containing the diff for the file.
+     * @return {boolean}  true if the file should be visible on page load.
+     *   false if the file should be hidden.
+     */
+    static toggleVisibility(fileContent) {
+        // Toggle visibility and return the new visibility state of the element
+        let visibilityBool = fileContent.is(&quot;:visible&quot;);
+        if (visibilityBool) {
+            fileContent.hide(350);
+        } else {
+            fileContent.show(350);
+        }
+        return !visibilityBool;
+    }
+}
+
+export default Utils
+
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.3)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

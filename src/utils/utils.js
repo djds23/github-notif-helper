@@ -16,7 +16,7 @@ class Utils {
      * @param  {MouseEvent} clickEvent - Click event from a file's action bar.
      * @return {string} ID of the file from the file's Github page.
      */
-    static getKeyIdFromElement(clickEvent) {
+    static getKeyIdFromEvent(clickEvent) {
         return $(clickEvent.toElement).closest("div[id^='diff-']").attr('id');
     }
 
@@ -54,7 +54,7 @@ class Utils {
         let button  = $('<a id="toggle" class="octicon-btn tooltipped tooltipped-nw"></a>');
         button.on("click", (event) => {
             let visibilityBool = Utils.toggleVisibility(fileContent);
-            Utils.updateLocalStorage(Utils.getKeyIdFromElement(event), visibilityBool);
+            Utils.updateLocalStorage(Utils.getKeyIdFromEvent(event), visibilityBool);
         });
 
         button.appendTo(actionBar);
