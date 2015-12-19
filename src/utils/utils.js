@@ -5,12 +5,36 @@ import $ from 'jquery';
  * @author Dean Silfen
  */
 class Utils {
+
+    /**
+     * @return {Object} Namespaced cache from page specific storage
+     */
+    static getPageCache() {
+        return JSON.parse(localStorage.getItem(location.href)) || {};
+    }
+
     /**
      * @return {Object<string, boolean>} the ID of each diff and it's visibility bool.
      */
     static getCachedFiles() {
-        return JSON.parse(localStorage.getItem(location.href)) || {};
+        let cache = Utils.getPageCache();
+        let files = {}
+        for (let key in cache) {
+            if (key.match(/diff/)) {
+                files[key] = cache[key];
+            }
+        }
+        return files;
     }
+
+    /**
+     * @description boolean weather comments are visible or not
+     * @return {boolean} true if comments should be shown, false if hidden
+     */
+    static getCommentVisibility() {
+        return !!Utils.getPageCache().comments;
+    }
+
 
     /**
      * @param  {MouseEvent} clickEvent - Click event from a file's action bar.
@@ -64,12 +88,12 @@ class Utils {
     }
 
     /**
+     * @description Toggle visibility and return the new visibility state of the element
      * @param  {jQuery} fileContent - jQuery div containing the diff for the file.
      * @return {boolean}  true if the file should be visible on page load.
      *   false if the file should be hidden.
      */
     static toggleVisibility(fileContent) {
-        // Toggle visibility and return the new visibility state of the element
         let visibilityBool = fileContent.is(":visible");
         if (visibilityBool) {
             fileContent.hide(350);

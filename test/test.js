@@ -41,11 +41,43 @@ describe('Utils', function () {
   describe('#getCachedFiles', function () {
     beforeEach(function () {
       global.localStorage = new MockLocalStorage();
+      global.location = {
+        'href': '/djds23/github-notif-helper/pull/1/files'
+      };
     })
 
     it('returns an empty object if nothing exists', function () {
-      expect(Utils.getCachedFiles()).to.eql({})
-      expect(localStorage.getItem.callCount).to.eql(1)
+      expect(Utils.getCachedFiles()).to.eql({});
+      expect(localStorage.getItem.callCount).to.eql(1);
+    })
+
+    it('only returns file diffs', function () {
+      Utils.updateLocalStorage('diff-0', true);
+      Utils.updateLocalStorage('comments', false);
+      expect(Utils.getCachedFiles()).to.eql({'diff-0': true});
+    })
+  })
+
+  describe('#getCommentVisibility', function () {
+    beforeEach(function () {
+      global.localStorage = new MockLocalStorage();
+      global.location = {
+        'href': '/djds23/github-notif-helper/pull/1/files'
+      };
+    })
+
+    it('does not break if nothing is set', function () {
+      expect(Utils.getCommentVisibility()).to.be.false;
+    })
+
+    it('returns false if comments are not visible', function () {
+      Utils.updateLocalStorage('comments', false);
+      expect(Utils.getCommentVisibility()).to.be.false;
+    })
+
+    it('returns true if comments are visible', function () {
+      Utils.updateLocalStorage('comments', true);
+      expect(Utils.getCommentVisibility()).to.be.true;
     })
   })
 
@@ -54,7 +86,7 @@ describe('Utils', function () {
       global.localStorage = new MockLocalStorage();
       global.location = {
         'href': '/djds23/github-notif-helper/pull/1/files'
-      }
+      };
     })
 
     it('updates localStorage with proper keys and values', function () {
@@ -78,3 +110,4 @@ describe('Utils', function () {
     })
   })
 });
+

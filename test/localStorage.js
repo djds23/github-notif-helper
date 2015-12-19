@@ -1,6 +1,5 @@
 import simple from 'simple-mock';
 
-
 class MockLocalStorage {
   constructor () {
     this.store = {}

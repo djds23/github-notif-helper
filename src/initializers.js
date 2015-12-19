@@ -14,15 +14,25 @@ class Initializers {
      */
     static addToggleComments(event, files) {
         if (!files.length || $('#toggle-comments').length) {
-          return;
+            return;
         }
 
+        Utils.updateLocalStorage('comments', true);
         let buttonGroup = $('.btn-group.right');
         let templateButton = $('<a id="toggle-comments" class="btn btn-sm"></a>');
-        templateButton.html('Hide Comments');
+        let $inlineComments = $('tr.inline-comments');
+        let $lineComments = $('add-line-comment');
+        templateButton.html('Toggle Comments');
         templateButton.on('click', (_) => {
-            $('tr.inline-comments').hide();
-            $('add-line-comment').hide();
+            if (Utils.getCommentVisibility()){
+                $inlineComments.hide();
+                $lineComments.hide();
+                Utils.updateLocalStorage('comments', false);
+            } else {
+                $inlineComments.show();
+                $lineComments.show();
+                Utils.updateLocalStorage('comments', true);
+            }
         });
         templateButton.appendTo(buttonGroup);
     }
