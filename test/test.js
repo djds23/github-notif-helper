@@ -10,8 +10,9 @@ describe('Utils', function () {
   jsdom()
 
   before(function () {
+    let localStorage = new MockLocalStorage();
     global.window = document.defaultView;
-    global.window.localStorage = new MockLocalStorage();
+    global.localStorage = localStorage;
     global.$ = require('jquery')(window);
   })
 
