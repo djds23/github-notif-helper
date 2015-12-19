@@ -31,7 +31,7 @@ class Utils {
             console.log('fileId is undefined');
             return false;
         }
-        let storedJsonObject = localStorage.getItem(location.href);
+        let storedJsonObject = localStorage.getItem(location.href) || '{}';
         let pageSpecificJsonCache = JSON.parse(storedJsonObject);
         pageSpecificJsonCache[fileId] = visibilityBool;
         let sotredJsonObject = JSON.stringify(pageSpecificJsonCache);

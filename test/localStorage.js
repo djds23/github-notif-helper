@@ -1,19 +1,25 @@
-let store = {}
+import simple from 'simple-mock';
+
 
 class MockLocalStorage {
-  getItem (key) {
-    const val = store[key]
-    return val ? String(val) : null;
-  }
+  constructor () {
+    this.store = {}
 
-  setItem (key, value) {
-    store[key] = String(value);
-    return String(value);
-  }
+    this.getItem = simple.spy((key) => {
+      const val = this.store[String(key)]
+      return val ? String(val) : null;
+    });
 
-  removeItem (key) {
-    delete store[key];
+    this.setItem = simple.spy((key, value) => {
+      this.store[String(key)] = String(value);
+      return String(value);
+    });
+
+    this.remoteItem = simple.spy((key) => {
+      delete this.store[key];
+    });
   }
 }
 
 export default MockLocalStorage;
+
