@@ -9,7 +9,7 @@ class Utils {
      * @return {Object<string, boolean>} the ID of each diff and it's visibility bool.
      */
     static getCachedFiles() {
-        return JSON.parse(localStorage.getItem(location.href)) || {};
+        return JSON.parse(window.localStorage.getItem(location.href)) || {};
     }
 
     /**

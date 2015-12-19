@@ -3,14 +3,16 @@ import jsdom from 'mocha-jsdom';
 import simple from 'simple-mock';
 
 import Utils from '../src/utils/utils.js';
+import MockLocalStorage from './localStorage.js';
 
 
 describe('Utils', function () {
   jsdom()
 
   before(function () {
-    global.window = document.defaultView
-    global.$ = require('jquery')(window)
+    global.window = document.defaultView;
+    global.window.localStorage = new MockLocalStorage();
+    global.$ = require('jquery')(window);
   })
 
 
@@ -34,6 +36,12 @@ describe('Utils', function () {
 
       expect(Utils.toggleVisibility(div)).to.be.true;
       expect(show.callCount).to.eql(1);
+    })
+  })
+
+  describe('#getCachedFiles', function () {
+    it('returns an empty object if nothing exists', function () {
+      expect(Utils.getCachedFiles()).to.eql({})
     })
   })
 });
