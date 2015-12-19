@@ -10,6 +10,9 @@ We also use Github for code reviews. This extension allows users to hide files i
 [Install Github Workflow from the Chrome Web Store!](http://bit.ly/1MKUxmg)
 
 #Fork & Contribute
+![build status](https://travis-ci.org/djds23/github-notif-helper.svg?branch=master)
+![documentation status](https://doc.esdoc.org/github.com/djds23/github-notif-helper/badge.svg)
+
 
 This project was built with ES2015 and Babel, using Gulp as the build tool.
 
