@@ -26,6 +26,8 @@ From here you can load the `dev/` directory into chrome as an unpacked extension
 
 As you edit the files in `src/`, run gulp to build the code and reload the extension to see your changes.
 
+Testing is done with Mocha & Chai. To check if your changes break anything, run `npm test`.
+
 [If you would like to get a feel for the code, check out the ESDOC for it here.](https://doc.esdoc.org/github.com/djds23/github-notif-helper/)
 
 
