@@ -28,15 +28,6 @@ class Utils {
     }
 
     /**
-     * @description boolean weather comments are visible or not
-     * @return {boolean} true if comments should be shown, false if hidden
-     */
-    static getCommentVisibility() {
-        return !!Utils.getPageCache().comments;
-    }
-
-
-    /**
      * @param  {MouseEvent} clickEvent - Click event from a file's action bar.
      * @return {string} ID of the file from the file's Github page.
      */

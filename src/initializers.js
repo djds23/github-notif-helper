@@ -8,36 +8,6 @@ import $ from 'jquery';
 class Initializers {
 
     /**
-     * @listens {EventFileInView} Listens to this event to add toggle comments button
-     * @param   {Event} event - triggered from url change
-     * @param   {Selector} files - all file div's on the page
-     */
-    static addToggleComments(event, files) {
-        if (!files.length || $('#toggle-comments').length) {
-            return;
-        }
-
-        Utils.updateLocalStorage('comments', true);
-        let buttonGroup = $('.btn-group.right');
-        let templateButton = $('<a id="toggle-comments" class="btn btn-sm"></a>');
-        let $inlineComments = $('tr.inline-comments');
-        let $lineComments = $('add-line-comment');
-        templateButton.html('Toggle Comments');
-        templateButton.on('click', (_) => {
-            if (Utils.getCommentVisibility()){
-                $inlineComments.hide();
-                $lineComments.hide();
-                Utils.updateLocalStorage('comments', false);
-            } else {
-                $inlineComments.show();
-                $lineComments.show();
-                Utils.updateLocalStorage('comments', true);
-            }
-        });
-        templateButton.appendTo(buttonGroup);
-    }
-
-    /**
      * @listens {EventFileInView} Listens to this event to add toggle all files button
      * @param   {Event} event - triggered from url change
      * @param   {Selector} files - all file div's on the page

@@ -58,29 +58,6 @@ describe('Utils', function () {
     })
   })
 
-  describe('#getCommentVisibility', function () {
-    beforeEach(function () {
-      global.localStorage = new MockLocalStorage();
-      global.location = {
-        'href': '/djds23/github-notif-helper/pull/1/files'
-      };
-    })
-
-    it('does not break if nothing is set', function () {
-      expect(Utils.getCommentVisibility()).to.be.false;
-    })
-
-    it('returns false if comments are not visible', function () {
-      Utils.updateLocalStorage('comments', false);
-      expect(Utils.getCommentVisibility()).to.be.false;
-    })
-
-    it('returns true if comments are visible', function () {
-      Utils.updateLocalStorage('comments', true);
-      expect(Utils.getCommentVisibility()).to.be.true;
-    })
-  })
-
   describe('#updateLocalStorage', function () {
     beforeEach(function () {
       global.localStorage = new MockLocalStorage();

@@ -28,5 +28,4 @@ function readyFunction() {
 $(document).ready(readyFunction);
 $(document).on(EventFileInView, Initializers.addToggle);
 $(document).on(EventFileInView, Initializers.addToggleAll);
-$(document).on(EventFileInView, Initializers.addToggleComments);
 
