@@ -11,6 +11,7 @@ We also use Github for code reviews. This extension allows users to hide files i
 
 #Fork & Contribute
 ![build status](https://travis-ci.org/djds23/github-notif-helper.svg?branch=master)
+![GitHub version](https://badge.fury.io/gh/djds23%2Fgithub-notif-helper.svg)
 ![documentation status](https://doc.esdoc.org/github.com/djds23/github-notif-helper/badge.svg)
 
 
