@@ -30,6 +30,8 @@
   },
   "scripts": {
     "test": "mocha --compilers js:babel-core/register",
+    "testcov": "istanbul cover --hook-run-in-context npm test -- -R test/**/*.js",
+    "codecov": "cat ./coverage/lcov.info | ./node_modules/.bin/codecov",
     "compress": "node scripts/compress.js"
   },
   "repository": {
