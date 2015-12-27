@@ -43,7 +43,8 @@ class Utils {
      * @return {number} number of commits as cached, 0 if never viewed before
      */
     static getCachedCommitNumber() {
-        return Utils.getPageCache().commitNum > 0 ? Utils.getPageCache().commitNum : -1
+        const cachedValue = Utils.getPageCache().commitNum;
+        return cachedValue > 0 ? cachedValue : -1
     }
 
     /**
@@ -86,7 +87,7 @@ class Utils {
         let button  = $('<a id="toggle" class="octicon-btn tooltipped tooltipped-nw"></a>');
         button.on("click", (event) => {
             let visibilityBool = Utils.toggleVisibility(fileContent);
-            Utils.updateLocalStorage(Utils.getKeyIdFromEvent(event), visibilityBool);
+            Utils.setFileInCache(Utils.getKeyIdFromEvent(event), visibilityBool);
         });
 
         button.appendTo(actionBar);
