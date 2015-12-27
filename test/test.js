@@ -22,6 +22,10 @@ describe('Utils', function () {
       };
     })
 
+    it('returns -1 when no value is stored', function() {
+      expect(Utils.getCachedCommitNumber()).to.eql(-1);
+    })
+
     it('gets the number of commits stached', function () {
       Utils.updateLocalStorage("commitNum", 5);
       expect(Utils.getCachedCommitNumber()).to.eql(5);
@@ -43,7 +47,7 @@ describe('Utils', function () {
       expect(Utils.getCachedFiles()).to.eql({'diff-0': true});
 
       Utils.resetCacheForPage();
-      expect(Utils.getCachedCommitNumber()).to.eql(0);
+      expect(Utils.getCachedCommitNumber()).to.eql(-1);
       expect(Utils.getCachedFiles()).to.eql({});
     })
   })
