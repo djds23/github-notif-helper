@@ -22,7 +22,6 @@ class Initializers {
         }
     }
 
-
     /**
      * @listens {EventFileInView} Listens to this event to add toggle all files button
      * @param   {Event} event - triggered from url change

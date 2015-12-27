@@ -14,7 +14,7 @@ class Utils {
     }
 
     /**
-     * Clear the local cache for the current page
+     * @description Clear the local cache for the current page
      * @return {undefined}
      */
     static resetCacheForPage() {
@@ -35,6 +35,9 @@ class Utils {
         return files;
     }
 
+    /**
+     * @return {number} number of commits as cached, 0 if never viewed before
+     */
     static getCachedCommitNumber() {
         return Utils.getPageCache().commitNum > 0 ? Utils.getPageCache().commitNum : 0
     }
