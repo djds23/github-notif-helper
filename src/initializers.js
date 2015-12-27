@@ -11,6 +11,7 @@ class Initializers {
      * @listens {EventFileInView} Listens to this event to add toggle all files button
      * @param   {Event} event - triggered from url change
      * @param   {Selector} files - all file div's on the page
+     * @param   {number} commitNum - count of commits for the current PR
      */
     static invalidateCacheForNewCommits(event, files, commitNum) {
         if (Utils.getCachedCommitNumber() == commitNum) {
@@ -26,6 +27,7 @@ class Initializers {
      * @listens {EventFileInView} Listens to this event to add toggle all files button
      * @param   {Event} event - triggered from url change
      * @param   {Selector} files - all file div's on the page
+     * @param   {number} commitNum - count of commits for the current PR
      */
     static addToggleAll(event, files, commitNum) {
         if (!files.length || $('#toggle-all').length) {
@@ -48,6 +50,7 @@ class Initializers {
      * @listens {EventFileInView} Listens to this event to add toggle button on file action bar
      * @param   {Event} event - triggered from url change
      * @param   {Selector} files - all file div's on the page
+     * @param   {number} commitNum - count of commits for the current PR
      */
     static addToggle(event, files, commitNum) {
         if (!files.length) {
