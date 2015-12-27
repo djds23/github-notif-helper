@@ -14,6 +14,39 @@ describe('Utils', function () {
     global.$ = require('jquery')(window);
   })
 
+  describe('#getCachedCommitNumber', function () {
+    beforeEach(function () {
+      global.localStorage = new MockLocalStorage();
+      global.location = {
+        'href': '/djds23/github-notif-helper/pull/1/files'
+      };
+    })
+
+    it('gets the number of commits stached', function () {
+      Utils.updateLocalStorage("commitNum", 5);
+      expect(Utils.getCachedCommitNumber()).to.eql(5);
+    })
+  })
+
+  describe('#resetCacheForPage', function () {
+    beforeEach(function () {
+      global.localStorage = new MockLocalStorage();
+      global.location = {
+        'href': '/djds23/github-notif-helper/pull/1/files'
+      };
+    })
+
+    it('resets the namespaced cache', function () {
+      Utils.updateLocalStorage('commitNum', 5);
+      Utils.updateLocalStorage('diff-0', true);
+      expect(Utils.getCachedCommitNumber()).to.eql(5);
+      expect(Utils.getCachedFiles()).to.eql({'diff-0': true});
+
+      Utils.resetCacheForPage();
+      expect(Utils.getCachedCommitNumber()).to.eql(0);
+      expect(Utils.getCachedFiles()).to.eql({});
+    })
+  })
 
   describe('#toggleVisibility', function () {
 
@@ -53,8 +86,9 @@ describe('Utils', function () {
 
     it('only returns file diffs', function () {
       Utils.updateLocalStorage('diff-0', true);
-      Utils.updateLocalStorage('comments', false);
+      Utils.updateLocalStorage('commitNum', 1);
       expect(Utils.getCachedFiles()).to.eql({'diff-0': true});
+      expect(Utils.getCachedCommitNumber()).to.eql(1);
     })
   })
 

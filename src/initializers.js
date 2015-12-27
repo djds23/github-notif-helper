@@ -14,19 +14,12 @@ class Initializers {
      */
     static invalidateCacheForNewCommits(event, files, commitNum) {
         if (Utils.getCachedCommitNumber() == commitNum) {
-          return;
+            return false;
+        } else {
+            Utils.resetCacheForPage();
+            Utils.updateLocalStorage('commits', commitNum);
+            return true;
         }
-
-        let buttonGroup = $('.btn-group.right');
-        let templateButton = $('<a id="toggle-all" class="btn btn-sm"></a>');
-        templateButton.html('Toggle All');
-        templateButton.on('click',  (clickEvent) => {
-            files.each((i, element) => {
-                let fileContent = $(element).find("div.data, div.render-wrapper");
-                Utils.toggleVisibility(fileContent);
-            });
-        });
-        templateButton.appendTo(buttonGroup);
     }
 
 

@@ -17,8 +17,8 @@ function readyFunction() {
             hash = location.hash;
             if (location.href.indexOf('files') !== -1) {
                 let files = $("#files").find("div[id^='diff-']");
-                let commits = parseInt($("#commits_tab_counter").html().trim());
-                $(document).trigger(EventFileInView, [files, commits]);
+                let commitNum = parseInt($("#commits_tab_counter").html().trim());
+                $(document).trigger(EventFileInView, [files, commitNum]);
             }
         }
         setTimeout(triggerLocationChange, 250);
@@ -26,7 +26,13 @@ function readyFunction() {
     triggerLocationChange();
 }
 
+// Attach the ready event
 $(document).ready(readyFunction);
+
+// Attach clear the cache if new commits are added
+$(document).on(EventFileInView, Initializers.invalidateCacheForNewCommits);
+
+// Anything else
 $(document).on(EventFileInView, Initializers.addToggle);
 $(document).on(EventFileInView, Initializers.addToggleAll);
 

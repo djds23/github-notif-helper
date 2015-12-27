@@ -14,6 +14,14 @@ class Utils {
     }
 
     /**
+     * Clear the local cache for the current page
+     * @return {undefined}
+     */
+    static resetCacheForPage() {
+        localStorage.setItem(location.href, JSON.stringify({}));
+    }
+
+    /**
      * @return {Object<string, boolean>} the ID of each diff and it's visibility bool.
      */
     static getCachedFiles() {
@@ -28,7 +36,7 @@ class Utils {
     }
 
     static getCachedCommitNumber() {
-        return Utils.getPageCache().commits
+        return Utils.getPageCache().commitNum > 0 ? Utils.getPageCache().commitNum : 0
     }
 
     /**
@@ -40,14 +48,13 @@ class Utils {
     }
 
     /**
-     * @param  {string} key - fileId of the file from the file's Github page.
-     * @param  {boolean} value - true if the file should be visible on page load.
-     *   false if the file should be hidden.
+     * @param  {string} key - key for cached pair
+     * @param  {boolean} value - value for the cached pair
      * @return {boolean} true if the value was saved.
      */
     static updateLocalStorage(key, value) {
-        if (fileId === undefined) {
-            console.log('fileId is undefined');
+        if (key === undefined) {
+            console.log('key is undefined');
             return false;
         }
         let pageSpecificJsonCache = Utils.getPageCache();
