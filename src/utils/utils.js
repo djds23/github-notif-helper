@@ -25,14 +25,18 @@ class Utils {
      * @return {Object<string, boolean>} the ID of each diff and it's visibility bool.
      */
     static getCachedFiles() {
-        let cache = Utils.getPageCache();
-        let files = {}
-        for (let key in cache) {
-            if (key.match(/diff/)) {
-                files[key] = cache[key];
-            }
-        }
-        return files;
+        return Utils.getPageCache().files || {};
+    }
+
+    /**
+     * @param {string} fileId - file id to be stored
+     * @param {boolean} visibilityBool - true if the file should be visible on page load.
+     *   false if the file should be hidden
+     */
+    static setFileInCache(fileId, visibilityBool) {
+        let cache = Utils.getCachedFiles();
+        cache[fileId] = visibilityBool;
+        return Utils.updateLocalStorage('files', cache);
     }
 
     /**
@@ -52,7 +56,7 @@ class Utils {
 
     /**
      * @param  {string} key - key for cached pair
-     * @param  {boolean} value - value for the cached pair
+     * @param  {object} value - value for the cached pair
      * @return {boolean} true if the value was saved.
      */
     static updateLocalStorage(key, value) {
@@ -62,8 +66,8 @@ class Utils {
         }
         let pageSpecificJsonCache = Utils.getPageCache();
         pageSpecificJsonCache[key] = value;
-        let sotredJsonObject = JSON.stringify(pageSpecificJsonCache);
-        localStorage.setItem(location.href, sotredJsonObject);
+        let serializedJsonObject = JSON.stringify(pageSpecificJsonCache);
+        localStorage.setItem(location.href, serializedJsonObject);
         return true;
     }
 

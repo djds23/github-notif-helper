@@ -17,8 +17,8 @@ function readyFunction() {
             hash = location.hash;
             if (location.href.indexOf('files') !== -1) {
                 let files = $("#files").find("div[id^='diff-']");
-                let commitNum = parseInt($("#commits_tab_counter").html().trim());
-                let commitNum = Number.isNaN(commitNum) ? 0 : commitNum;
+                let _commits = parseInt($("#commits_tab_counter").html().trim());
+                let commitNum = Number.isNaN(_commits) ? -1 : _commits;
                 $(document).trigger(EventFileInView, [files, commitNum]);
             }
         }

@@ -14,7 +14,8 @@ class Initializers {
      * @param   {number} commitNum - count of commits for the current PR
      */
     static invalidateCacheForNewCommits(event, files, commitNum) {
-        if (Utils.getCachedCommitNumber() == commitNum) {
+        let cachedCount = Utils.getCachedCommitNumber()
+        if (cachedCount !== -1 && cachedCount == commitNum) {
             return false;
         } else {
             Utils.resetCacheForPage();
@@ -67,7 +68,7 @@ class Initializers {
             }
         });
         let jsonViewedFiles = JSON.stringify(viewedFiles);
-        localStorage.setItem(location.href, jsonViewedFiles)
+        Utils.updateLocalStorage('files', jsonViewedFiles)
     }
 }
 
