@@ -12,7 +12,30 @@ class Initializers {
      * @param   {Event} event - triggered from url change
      * @param   {Selector} files - all file div's on the page
      */
-    static addToggleAll(event, files) {
+    static invalidateCacheForNewCommits(event, files, commitNum) {
+        if (Utils.getCachedCommitNumber() == commitNum) {
+          return;
+        }
+
+        let buttonGroup = $('.btn-group.right');
+        let templateButton = $('<a id="toggle-all" class="btn btn-sm"></a>');
+        templateButton.html('Toggle All');
+        templateButton.on('click',  (clickEvent) => {
+            files.each((i, element) => {
+                let fileContent = $(element).find("div.data, div.render-wrapper");
+                Utils.toggleVisibility(fileContent);
+            });
+        });
+        templateButton.appendTo(buttonGroup);
+    }
+
+
+    /**
+     * @listens {EventFileInView} Listens to this event to add toggle all files button
+     * @param   {Event} event - triggered from url change
+     * @param   {Selector} files - all file div's on the page
+     */
+    static addToggleAll(event, files, commitNum) {
         if (!files.length || $('#toggle-all').length) {
           return;
         }
@@ -34,7 +57,7 @@ class Initializers {
      * @param   {Event} event - triggered from url change
      * @param   {Selector} files - all file div's on the page
      */
-    static addToggle(event, files) {
+    static addToggle(event, files, commitNum) {
         if (!files.length) {
           return;
         }

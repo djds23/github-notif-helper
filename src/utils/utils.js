@@ -27,6 +27,10 @@ class Utils {
         return files;
     }
 
+    static getCachedCommitNumber() {
+        return Utils.getPageCache().commits
+    }
+
     /**
      * @param  {MouseEvent} clickEvent - Click event from a file's action bar.
      * @return {string} ID of the file from the file's Github page.
@@ -36,19 +40,18 @@ class Utils {
     }
 
     /**
-     * @param  {string} fileId - fileId of the file from the file's Github page.
-     * @param  {boolean} visibilityBool - true if the file should be visible on page load.
+     * @param  {string} key - fileId of the file from the file's Github page.
+     * @param  {boolean} value - true if the file should be visible on page load.
      *   false if the file should be hidden.
-     * @return {boolean} true if the visibility was properly saved.
+     * @return {boolean} true if the value was saved.
      */
-    static updateLocalStorage(fileId, visibilityBool) {
+    static updateLocalStorage(key, value) {
         if (fileId === undefined) {
             console.log('fileId is undefined');
             return false;
         }
-        let storedJsonObject = localStorage.getItem(location.href) || '{}';
-        let pageSpecificJsonCache = JSON.parse(storedJsonObject);
-        pageSpecificJsonCache[fileId] = visibilityBool;
+        let pageSpecificJsonCache = Utils.getPageCache();
+        pageSpecificJsonCache[key] = value;
         let sotredJsonObject = JSON.stringify(pageSpecificJsonCache);
         localStorage.setItem(location.href, sotredJsonObject);
         return true;
