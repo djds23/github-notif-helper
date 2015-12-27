@@ -15,8 +15,7 @@ class Initializers {
      */
     static invalidateCacheForNewCommits(event, files, commitNum) {
         let cachedCount = Utils.getCachedCommitNumber();
-        let hasCachedFiles = !($.isEmptyObject(Utils.getCachedFiles()));
-        if ((cachedCount !== -1 && cachedCount === commitNum) || hasCachedFiles) {
+        if (cachedCount !== -1 && cachedCount === commitNum) {
             return false;
         } else {
             Utils.resetCacheForPage();
