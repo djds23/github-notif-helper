@@ -72,7 +72,8 @@ class Utils {
     /**
      * @param  {string} key - key for cached pair
      * @param  {object} value - value for the cached pair
-     * @return {boolean} true if the value was saved.     */
+     * @return {boolean} true if the value was saved.
+     */
     static updateLocalStorage(key, value) {
         if (key === undefined) {
             console.log('key is undefined');
