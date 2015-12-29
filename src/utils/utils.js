@@ -56,10 +56,23 @@ class Utils {
     }
 
     /**
+     * @return {number} Unix timestamp of the last time the page was viewed, -1 if no value is cached.
+     */
+    static getLastViewed() {
+        return Utils.getPageCache().lastViewed || -1;
+    }
+
+    /**
+     * @description store the current time as the lastViewed in page local cache
+     */
+    static setLastViewed() {
+        Utils.updateLocalStorage("lastViewed", Date.now());
+    }
+
+    /**
      * @param  {string} key - key for cached pair
      * @param  {object} value - value for the cached pair
-     * @return {boolean} true if the value was saved.
-     */
+     * @return {boolean} true if the value was saved.     */
     static updateLocalStorage(key, value) {
         if (key === undefined) {
             console.log('key is undefined');

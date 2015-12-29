@@ -1,4 +1,5 @@
 import Utils from './utils/utils.js';
+import DateUtils from './utils/dateutils.js';
 import Initializers from './initializers.js';
 import $ from 'jquery';
 
