@@ -8,11 +8,29 @@ import $ from 'jquery';
 class Initializers {
 
     /**
-     * @listens {EventFileInView} Listens to this event to add toggle all files button
-     * @param   {Event} event - triggered from url change
+     * @listens {EventFileInView} Listens to this event to invalidate cache
+     * @param   {Event} event - triggered from navigating to /files URL
      * @param   {Selector} files - all file div's on the page
+     * @param   {number} commitNum - count of commits for the current PR
      */
-    static addToggleAll(event, files) {
+    static invalidateCacheForNewCommits(event, files, commitNum) {
+        let cachedCount = Utils.getCachedCommitNumber();
+        if (cachedCount !== -1 && cachedCount === commitNum) {
+            return false;
+        } else {
+            Utils.resetCacheForPage();
+            Utils.updateLocalStorage('commitNum', commitNum);
+            return true;
+        }
+    }
+
+    /**
+     * @listens {EventFileInView} Listens to this event to add toggle all files button
+     * @param   {Event} event - triggered from navigating to /files URL
+     * @param   {Selector} files - all file div's on the page
+     * @param   {number} commitNum - count of commits for the current PR
+     */
+    static addToggleAll(event, files, commitNum) {
         if (!files.length || $('#toggle-all').length) {
           return;
         }
@@ -31,10 +49,11 @@ class Initializers {
 
     /**
      * @listens {EventFileInView} Listens to this event to add toggle button on file action bar
-     * @param   {Event} event - triggered from url change
+     * @param   {Event} event - triggered from navigating to /files URL
      * @param   {Selector} files - all file div's on the page
+     * @param   {number} commitNum - count of commits for the current PR
      */
-    static addToggle(event, files) {
+    static addToggle(event, files, commitNum) {
         if (!files.length) {
           return;
         }
@@ -48,8 +67,7 @@ class Initializers {
                 viewedFiles[element.id] = true;
             }
         });
-        let jsonViewedFiles = JSON.stringify(viewedFiles);
-        localStorage.setItem(location.href, jsonViewedFiles)
+        Utils.updateLocalStorage('files', viewedFiles)
     }
 }
 

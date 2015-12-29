@@ -14,17 +14,37 @@ class Utils {
     }
 
     /**
+     * @description Clear the local cache for the current page
+     * @return {undefined}
+     */
+    static resetCacheForPage() {
+        localStorage.setItem(location.href, JSON.stringify({}));
+    }
+
+    /**
      * @return {Object<string, boolean>} the ID of each diff and it's visibility bool.
      */
     static getCachedFiles() {
-        let cache = Utils.getPageCache();
-        let files = {}
-        for (let key in cache) {
-            if (key.match(/diff/)) {
-                files[key] = cache[key];
-            }
-        }
-        return files;
+        return Utils.getPageCache().files || {};
+    }
+
+    /**
+     * @param {string} fileId - file id to be stored
+     * @param {boolean} visibilityBool - true if the file should be visible on page load.
+     *   false if the file should be hidden
+     */
+    static setFileInCache(fileId, visibilityBool) {
+        let cache = Utils.getCachedFiles();
+        cache[fileId] = visibilityBool;
+        return Utils.updateLocalStorage('files', cache);
+    }
+
+    /**
+     * @return {number} number of commits as cached, 0 if never viewed before
+     */
+    static getCachedCommitNumber() {
+        const cachedValue = Utils.getPageCache().commitNum;
+        return cachedValue > 0 ? cachedValue : -1
     }
 
     /**
@@ -36,21 +56,19 @@ class Utils {
     }
 
     /**
-     * @param  {string} fileId - fileId of the file from the file's Github page.
-     * @param  {boolean} visibilityBool - true if the file should be visible on page load.
-     *   false if the file should be hidden.
-     * @return {boolean} true if the visibility was properly saved.
+     * @param  {string} key - key for cached pair
+     * @param  {object} value - value for the cached pair
+     * @return {boolean} true if the value was saved.
      */
-    static updateLocalStorage(fileId, visibilityBool) {
-        if (fileId === undefined) {
-            console.log('fileId is undefined');
+    static updateLocalStorage(key, value) {
+        if (key === undefined) {
+            console.log('key is undefined');
             return false;
         }
-        let storedJsonObject = localStorage.getItem(location.href) || '{}';
-        let pageSpecificJsonCache = JSON.parse(storedJsonObject);
-        pageSpecificJsonCache[fileId] = visibilityBool;
-        let sotredJsonObject = JSON.stringify(pageSpecificJsonCache);
-        localStorage.setItem(location.href, sotredJsonObject);
+        let pageSpecificJsonCache = Utils.getPageCache();
+        pageSpecificJsonCache[key] = value;
+        let serializedJsonObject = JSON.stringify(pageSpecificJsonCache);
+        localStorage.setItem(location.href, serializedJsonObject);
         return true;
     }
 
@@ -69,7 +87,7 @@ class Utils {
         let button  = $('<a id="toggle" class="octicon-btn tooltipped tooltipped-nw"></a>');
         button.on("click", (event) => {
             let visibilityBool = Utils.toggleVisibility(fileContent);
-            Utils.updateLocalStorage(Utils.getKeyIdFromEvent(event), visibilityBool);
+            Utils.setFileInCache(Utils.getKeyIdFromEvent(event), visibilityBool);
         });
 
         button.appendTo(actionBar);

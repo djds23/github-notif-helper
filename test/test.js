@@ -14,6 +14,64 @@ describe('Utils', function () {
     global.$ = require('jquery')(window);
   })
 
+  describe('#getCachedCommitNumber', function () {
+    beforeEach(function () {
+      global.localStorage = new MockLocalStorage();
+      global.location = {
+        'href': '/djds23/github-notif-helper/pull/1/files'
+      };
+    })
+
+    it('returns -1 when no value is stored', function() {
+      expect(Utils.getCachedCommitNumber()).to.eql(-1);
+    })
+
+    it('gets the number of commits stached', function () {
+      Utils.updateLocalStorage("commitNum", 5);
+      expect(Utils.getCachedCommitNumber()).to.eql(5);
+    })
+  })
+
+  describe('#setFileInCache', function () {
+    beforeEach(function () {
+      global.localStorage = new MockLocalStorage();
+      global.location = {
+        'href': '/djds23/github-notif-helper/pull/1/files'
+      };
+    })
+
+    it('sets file if no page cache exists', function() {
+      expect(Utils.getCachedFiles()).to.eql({});
+      Utils.setFileInCache('diff-0', true);
+      expect(Utils.getCachedFiles()).to.eql({'diff-0': true});
+    })
+
+    it('appends to the existing cache', function() {
+      Utils.updateLocalStorage('files', {'diff-0': true});
+      Utils.setFileInCache('diff-1', false);
+      expect(Utils.getCachedFiles()).to.eql({'diff-0': true, 'diff-1': false});
+    })
+  })
+
+  describe('#resetCacheForPage', function () {
+    beforeEach(function () {
+      global.localStorage = new MockLocalStorage();
+      global.location = {
+        'href': '/djds23/github-notif-helper/pull/1/files'
+      };
+    })
+
+    it('resets the namespaced cache', function () {
+      Utils.updateLocalStorage('commitNum', 5);
+      Utils.updateLocalStorage('files', {'diff-0': true});
+      expect(Utils.getCachedCommitNumber()).to.eql(5);
+      expect(Utils.getCachedFiles()).to.eql({'diff-0': true});
+
+      Utils.resetCacheForPage();
+      expect(Utils.getCachedCommitNumber()).to.eql(-1);
+      expect(Utils.getCachedFiles()).to.eql({});
+    })
+  })
 
   describe('#toggleVisibility', function () {
 
@@ -52,9 +110,10 @@ describe('Utils', function () {
     })
 
     it('only returns file diffs', function () {
-      Utils.updateLocalStorage('diff-0', true);
-      Utils.updateLocalStorage('comments', false);
+      Utils.updateLocalStorage('files', {'diff-0': true});
+      Utils.updateLocalStorage('commitNum', 1);
       expect(Utils.getCachedFiles()).to.eql({'diff-0': true});
+      expect(Utils.getCachedCommitNumber()).to.eql(1);
     })
   })
 
