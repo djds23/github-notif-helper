@@ -18,4 +18,3 @@ class DateUtils {
 
 export default DateUtils
 
-
