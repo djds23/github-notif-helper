@@ -2,18 +2,18 @@ import {assert, expect} from 'chai';
 import jsdom from 'mocha-jsdom';
 import simple from 'simple-mock';
 
-import DateUtils from '../src/utils/dateutils.js';
+import CacheValidator from '../src/utils/cache_validator.js';
 
 
-describe('DateUtils', function () {
-  describe('#shouldBustCache', function () {
-    it('false if timestamp is newer than 30 days', function () {
-      expect(DateUtils.shouldBustCache(Date.now())).to.be.false;
+describe('CacheValidator', function () {
+  describe('#cacheIsFresh', function () {
+    it('returns true if timestamp was saved in the last 30 days', function () {
+      expect(CacheValidator.cacheIsFresh(Date.now())).to.be.true;
     })
 
-    it('true if timestamp is older than 30 days', function () {
+    it('returns false if timestamp is older than 30 days', function () {
       const oldTimestamp = new Date("Thur August 23 1990 00:00:00 UTC")
-      expect(DateUtils.shouldBustCache(oldTimestamp)).to.be.true;
+      expect(CacheValidator.cacheIsFresh(oldTimestamp)).to.be.false;
     })
   })
 });

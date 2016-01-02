@@ -31,7 +31,7 @@ function readyFunction() {
 $(document).ready(readyFunction);
 
 // Attach clear the cache if new commits are added
-$(document).on(EventFileInView, Initializers.invalidateCacheForNewCommits);
+$(document).on(EventFileInView, Initializers.invalidateCache);
 
 // Anything else
 $(document).on(EventFileInView, Initializers.addToggle);
