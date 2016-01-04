@@ -2,7 +2,8 @@ import $ from 'jquery';
 import moment from 'moment';
 
 /**
- * DateUtils class, holds all convenience methods for project.
+ * CacheValidator class, methods here check for the validity of the cache.
+ *   These methods should return false if the cache is invalid.
  * @author Dean Silfen
  */
 class CacheValidator {
