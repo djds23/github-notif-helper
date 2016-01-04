@@ -111,7 +111,7 @@ class Utils {
     }
 
     /**
-     * @description Toggle visibility and return the new visibility state of the element
+     * @desc Toggle visibility and return the new visibility state of the element
      * @param  {jQuery} fileContent - jQuery div containing the diff for the file.
      * @return {boolean}  true if the file should be visible on page load.
      *   false if the file should be hidden.
