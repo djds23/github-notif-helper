@@ -14,7 +14,7 @@ class Utils {
     }
 
     /**
-     * @description Clear the local cache for the current page
+     * @desc Clear the local cache for the current page
      * @return {undefined}
      */
     static resetCacheForPage() {
@@ -53,6 +53,20 @@ class Utils {
      */
     static getKeyIdFromEvent(clickEvent) {
         return $(clickEvent.toElement).closest("div[id^='diff-']").attr('id');
+    }
+
+    /**
+     * @return {number} Unix timestamp of the last time the page was viewed, -1 if no value is cached.
+     */
+    static getLastViewed() {
+        return Utils.getPageCache().lastViewed || -1;
+    }
+
+    /**
+     * @desc store the current time as the lastViewed in page local cache
+     */
+    static setLastViewed() {
+        Utils.updateLocalStorage("lastViewed", Date.now());
     }
 
     /**
@@ -97,7 +111,7 @@ class Utils {
     }
 
     /**
-     * @description Toggle visibility and return the new visibility state of the element
+     * @desc Toggle visibility and return the new visibility state of the element
      * @param  {jQuery} fileContent - jQuery div containing the diff for the file.
      * @return {boolean}  true if the file should be visible on page load.
      *   false if the file should be hidden.

@@ -1,4 +1,5 @@
 import Utils from './utils/utils.js';
+import CacheValidator from './utils/cache_validator.js';
 import $ from 'jquery';
 
 /**
@@ -13,15 +14,22 @@ class Initializers {
      * @param   {Selector} files - all file div's on the page
      * @param   {number} commitNum - count of commits for the current PR
      */
-    static invalidateCacheForNewCommits(event, files, commitNum) {
+    static invalidateCache(event, files, commitNum) {
         let cachedCount = Utils.getCachedCommitNumber();
-        if (cachedCount !== -1 && cachedCount === commitNum) {
+        let timestamp = Utils.getLastViewed();
+
+        const noNewCommits = CacheValidator.noNewCommits(cachedCount, commitNum);
+        const cacheIsFresh = CacheValidator.cacheIsFresh(timestamp);
+
+        if (cacheIsFresh && noNewCommits) {
+            Utils.setLastViewed();
             return false;
-        } else {
-            Utils.resetCacheForPage();
-            Utils.updateLocalStorage('commitNum', commitNum);
-            return true;
         }
+
+        Utils.resetCacheForPage();
+        Utils.updateLocalStorage('commitNum', commitNum);
+        Utils.setLastViewed();
+        return true;
     }
 
     /**
