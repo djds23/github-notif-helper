@@ -1,4 +1,3 @@
-import Utils from './utils/utils.js';
 import Initializers from './initializers.js';
 import $ from 'jquery';
 
