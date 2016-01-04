@@ -12,7 +12,7 @@ class CacheValidator {
      * @return {boolean} true if cache is stale and should be busted
      */
     static cacheIsFresh(timestamp) {
-        return moment(timestamp).isAfter(moment().subtract(30, 'days'));
+        return timestamp > 0 && moment(timestamp).isAfter(moment().subtract(30, 'days'));
     }
 
     /**
@@ -20,7 +20,7 @@ class CacheValidator {
      * @return {boolean} true if cache is stale and should be busted
      */
     static noNewCommits(cachedCount, commitNum) {
-        return cachedCount !== -1 && cachedCount === commitNum;
+        return cachedCount > 0 && cachedCount === commitNum;
     }
 }
 
