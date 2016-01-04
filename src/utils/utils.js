@@ -14,7 +14,7 @@ class Utils {
     }
 
     /**
-     * @description Clear the local cache for the current page
+     * @desc Clear the local cache for the current page
      * @return {undefined}
      */
     static resetCacheForPage() {
@@ -63,7 +63,7 @@ class Utils {
     }
 
     /**
-     * @description store the current time as the lastViewed in page local cache
+     * @desc store the current time as the lastViewed in page local cache
      */
     static setLastViewed() {
         Utils.updateLocalStorage("lastViewed", Date.now());
