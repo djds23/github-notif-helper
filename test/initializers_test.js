@@ -99,8 +99,8 @@ describe('Initializers', function () {
     })
 
     it('does nothing if no files are passed', function () {
-      Initializers.addToggle({}, [], 0)
-      expect(Utils.getCachedFiles.callCount).to.eql(0)
+      Initializers.addToggle({}, [], 0);
+      expect(Utils.getCachedFiles.callCount).to.eql(0);
     })
 
     it('adds id to cache for each file object', function () {
@@ -108,9 +108,9 @@ describe('Initializers', function () {
       const mockFileTwo = { id: 'diff-1' };
       const mockFileThree = { id: 'diff-2' };
 
-      let callToggle = (() => {
+      let callToggle = () => {
         Initializers.addToggle({}, [mockFileOne, mockFileTwo, mockFileThree], 1)
-      })
+      };
 
       let cachedFilesFunc = Utils.getCachedFiles;
       let expectedOutput = {
