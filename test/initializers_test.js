@@ -9,8 +9,17 @@ import MockLocalStorage from './localStorage.js';
 
 describe('Initializers', function () {
 
-  let $;
   jsdom();
+
+  before(function () {
+    // Mock each function so I can pass array and iterate over it
+    // as if it was a jQuery selector.
+    Array.prototype.each = function (func) {
+      this.forEach((element, index, array) => {
+        func(index, element);
+      });
+    };
+  })
 
   describe('#invalidateCache', function () {
     beforeEach(function () {
@@ -87,11 +96,6 @@ describe('Initializers', function () {
       simple.mock(Utils, 'addToggleButtonForElement').returnWith(undefined);
       simple.mock(Utils, 'getCachedFiles').callOriginal();
 
-      Array.prototype.each = function (func) {
-        this.forEach((element, index, array) => {
-          func(index, element);
-        });
-      };
     })
 
     it('does nothing if no files are passed', function () {
