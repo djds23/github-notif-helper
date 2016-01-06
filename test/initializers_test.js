@@ -8,7 +8,7 @@ import MockLocalStorage from './localStorage.js';
 
 
 describe('Initializers', function () {
-
+  var $;
   jsdom();
 
   before(function () {
@@ -81,11 +81,18 @@ describe('Initializers', function () {
   describe('#addToggleAll', function () {
     beforeEach(function () {
       simple.mock(Utils, 'getCachedFiles').callOriginal();
+      $ = require('jquery')(document.defaultView);
     })
 
     it('does nothing if no files are passed', function () {
-      Initializers.addToggleAll({}, [], 0)
-      expect(Utils.getCachedFiles.callCount).to.eql(0)
+      const toggleWorked = Initializers.addToggleAll({}, [], 0);
+      expect(Utils.getCachedFiles.callCount).to.eql(0);
+      expect(toggleWorked).to.be.false;
+    })
+
+    xit('adds toggle all button to page if files exist', function () {
+      const toggleWorked = Initializers.addToggleAll({}, [1,2,3,4], 1);
+      expect(toggleWorked).to.be.true; // currently pending, jQuery is broken
     })
   })
 
@@ -99,8 +106,9 @@ describe('Initializers', function () {
     })
 
     it('does nothing if no files are passed', function () {
-      Initializers.addToggle({}, [], 0);
+      const togglesAdded = Initializers.addToggle({}, [], 0);
       expect(Utils.getCachedFiles.callCount).to.eql(0);
+      expect(togglesAdded).to.be.false;
     })
 
     it('adds id to cache for each file object', function () {
@@ -108,8 +116,9 @@ describe('Initializers', function () {
       const mockFileTwo = { id: 'diff-1' };
       const mockFileThree = { id: 'diff-2' };
 
+      let togglesAdded;
       let callToggle = () => {
-        Initializers.addToggle({}, [mockFileOne, mockFileTwo, mockFileThree], 1)
+        togglesAdded = Initializers.addToggle({}, [mockFileOne, mockFileTwo, mockFileThree], 1)
       };
 
       let cachedFilesFunc = Utils.getCachedFiles;
@@ -121,6 +130,7 @@ describe('Initializers', function () {
 
       expect(callToggle).to.increase(cachedFilesFunc, 'callCount');
       expect(Utils.getCachedFiles()).to.eql(expectedOutput);
+      expect(togglesAdded).to.be.true;
     })
   })
 });
