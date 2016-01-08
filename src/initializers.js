@@ -40,7 +40,7 @@ class Initializers {
      */
     static addToggleAll(event, files, commitNum) {
         if (!files.length || $('#toggle-all').length) {
-          return;
+          return false;
         }
 
         let buttonGroup = $('.btn-group.right');
@@ -53,6 +53,7 @@ class Initializers {
             });
         });
         templateButton.appendTo(buttonGroup);
+        return true;
     }
 
     /**
@@ -63,7 +64,7 @@ class Initializers {
      */
     static addToggle(event, files, commitNum) {
         if (!files.length) {
-          return;
+          return false;
         }
         let viewedFiles = Utils.getCachedFiles();
         files.each((i, element) => {
@@ -76,6 +77,7 @@ class Initializers {
             }
         });
         Utils.updateLocalStorage('files', viewedFiles)
+        return true
     }
 }
 
