@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import pageLocalStorage from 'page-local-storage';
 
 /**
  * Utils class, holds all convenience methods for project.
@@ -25,7 +26,8 @@ class Utils {
      * @return {Object<string, boolean>} the ID of each diff and it's visibility bool.
      */
     static getCachedFiles() {
-        return Utils.getPageCache().files || {};
+        console.log(pageLocalStorage);
+        return pageLocalStorage.getItem('files') || {};
     }
 
     /**

@@ -16,10 +16,8 @@ describe('Utils', function () {
 
   describe('#getCachedCommitNumber', function () {
     beforeEach(function () {
-      global.localStorage = new MockLocalStorage();
-      global.location = {
-        'href': '/djds23/github-notif-helper/pull/1/files'
-      };
+      global.window.localStorage = new MockLocalStorage();
+      global.window.location.href = 'http://github.com/djds23/github-notif-helper/pull/1/files';
     })
 
     it('returns -1 when no value is stored', function() {
@@ -34,10 +32,8 @@ describe('Utils', function () {
 
   describe('#setFileInCache', function () {
     beforeEach(function () {
-      global.localStorage = new MockLocalStorage();
-      global.location = {
-        'href': '/djds23/github-notif-helper/pull/1/files'
-      };
+      global.window.localStorage = new MockLocalStorage();
+      global.window.location.href = 'http://github.com/djds23/github-notif-helper/pull/1/files';
     })
 
     it('sets file if no page cache exists', function() {
@@ -55,10 +51,8 @@ describe('Utils', function () {
 
   describe('#resetCacheForPage', function () {
     beforeEach(function () {
-      global.localStorage = new MockLocalStorage();
-      global.location = {
-        'href': '/djds23/github-notif-helper/pull/1/files'
-      };
+      global.window.localStorage = new MockLocalStorage();
+      global.window.location.href = 'http://github.com/djds23/github-notif-helper/pull/1/files';
     })
 
     it('resets the namespaced cache', function () {
@@ -98,10 +92,8 @@ describe('Utils', function () {
 
   describe('#getCachedFiles', function () {
     beforeEach(function () {
-      global.localStorage = new MockLocalStorage();
-      global.location = {
-        'href': '/djds23/github-notif-helper/pull/1/files'
-      };
+      global.window.localStorage = new MockLocalStorage();
+      global.window.location.href = 'http://github.com/djds23/github-notif-helper/pull/1/files';
     })
 
     it('returns an empty object if nothing exists', function () {
@@ -119,10 +111,8 @@ describe('Utils', function () {
 
   describe('#updateLocalStorage', function () {
     beforeEach(function () {
-      global.localStorage = new MockLocalStorage();
-      global.location = {
-        'href': '/djds23/github-notif-helper/pull/1/files'
-      };
+      global.window.localStorage = new MockLocalStorage();
+      global.window.location.href = 'http://github.com/djds23/github-notif-helper/pull/1/files';
     })
 
     it('updates localStorage with proper keys and values', function () {
@@ -133,11 +123,11 @@ describe('Utils', function () {
     })
 
     it('updates localStorage with different hrefs', function () {
-      let url1 = '/url1';
+      let url1 = 'https://github.com/lukehoban/es6features/pull/99';
       location.href = url1;
       Utils.updateLocalStorage('diff-0', true);
 
-      let url2 = '/url2';
+      let url2 = 'https://github.com/lukehoban/es6features/pull/100';
       location.href = url2;
       Utils.updateLocalStorage('diff-0', true);
 
