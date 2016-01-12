@@ -9,9 +9,9 @@ This extension allows users to hide files in pull requests. I find this helpful 
 [Install Github Workflow from the Chrome Web Store!](http://bit.ly/1MKUxmg)
 
 #Fork & Contribute
-![build status](https://travis-ci.org/djds23/github-notif-helper.svg?branch=master)
+[![build status](https://travis-ci.org/djds23/github-notif-helper.svg?branch=master)](https://travis-ci.org/djds23/github-notif-helper)
 ![GitHub version](https://badge.fury.io/gh/djds23%2Fgithub-notif-helper.svg)
-![documentation status](https://doc.esdoc.org/github.com/djds23/github-notif-helper/badge.svg)
+[![documentation status](https://doc.esdoc.org/github.com/djds23/github-notif-helper/badge.svg)](https://doc.esdoc.org/github.com/djds23/github-notif-helper/)
 
 
 This project was built with ES2015 and Babel, using Gulp as the build tool.
