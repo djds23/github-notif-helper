@@ -64,7 +64,7 @@ class Initializers {
      */
     static addToggle(event, files, commitNum) {
         if (!files.length) {
-          return false;
+            return false;
         }
         let viewedFiles = Utils.getCachedFiles();
         files.each((i, element) => {
@@ -78,6 +78,25 @@ class Initializers {
         });
         Utils.updateLocalStorage('files', viewedFiles)
         return true
+    }
+
+    /**
+     * @listens {EventFileInView} Listens to this event to add toggle button on file action bar
+     * @param   {Event} event - triggered from navigating to /files URL
+     * @param   {Selector} files - all file div's on the page
+     * @param   {number} commitNum - count of commits for the current PR
+     */
+    static makeBranchesLinks(event, files, commitNum) {
+        if ($('.branch-anchor-tag').length) {
+            return false;
+        }
+
+        const branchClassGroup = "span.commit-ref.current-branch.css-truncate"
+        $(branchClassGroup).each((i, outerSpan) => {
+            let anchor = Utils.branchSpanToAnchor(outerSpan.firstChild);
+            outerSpan.appendChild(anchor);
+        });
+        return true;
     }
 }
 
