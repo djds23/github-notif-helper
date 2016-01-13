@@ -125,6 +125,20 @@ class Utils {
         }
         return !visibilityBool;
     }
+
+    /**
+     * @desc Take a branch name and return the URL for that branch
+     * @param {HTMLSpanElement} span span containing branch
+     * @return {HTMLAnchorElement} Anchor element
+     */
+    static branchSpanToAnchor(span) {
+        let branchUrl = "https://github.com/djds23/github-notif-helper/tree/" + span.innerHTML;
+        let anchor = document.createElement('a');
+        anchor.className = "branch-anchor-tag";
+        anchor.href = branchUrl;
+        anchor.appendChild(span);
+        return anchor;
+    }
 }
 
 export default Utils

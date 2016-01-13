@@ -2,10 +2,12 @@ import Initializers from './initializers.js';
 import $ from 'jquery';
 
 const EventFileInView = 'FILES_IN_VIEW';
+const EventOnPullPage = 'PULL_PAGE';
 
 /**
  * @emits {EventFileInView} emits EventFileInView event when on the 'files'
  *   tab of a Pull Request.
+ * @emits {EventOnPullPage} emits EventOnPullPage when 'pull' is in the url
  */
 function readyFunction() {
     let href;
@@ -21,6 +23,10 @@ function readyFunction() {
                 $(document).trigger(EventFileInView, [files, commitNum]);
             }
         }
+
+        if (location.href.indexOf('pull') !== -1) {
+            $(document).trigger(EventOnPullPage, []);
+        }
         setTimeout(triggerLocationChange, 250);
     }
     triggerLocationChange();
@@ -35,4 +41,6 @@ $(document).on(EventFileInView, Initializers.invalidateCache);
 // Anything else
 $(document).on(EventFileInView, Initializers.addToggle);
 $(document).on(EventFileInView, Initializers.addToggleAll);
+$(document).on(EventOnPullPage, Initializers.makeBranchesLinks);
+
 

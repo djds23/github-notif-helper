@@ -64,7 +64,7 @@ class Initializers {
      */
     static addToggle(event, files, commitNum) {
         if (!files.length) {
-          return false;
+            return false;
         }
         let viewedFiles = Utils.getCachedFiles();
         files.each((i, element) => {
@@ -87,7 +87,16 @@ class Initializers {
      * @param   {number} commitNum - count of commits for the current PR
      */
     static makeBranchesLinks(event, files, commitNum) {
-        
+        if ($('.branch-anchor-tag').length) {
+            return false;
+        }
+
+        const branchClassGroup = "span.commit-ref.current-branch.css-truncate"
+        $(branchClassGroup).each((i, outerSpan) => {
+            let anchor = Utils.branchSpanToAnchor(outerSpan.firstChild);
+            outerSpan.appendChild(anchor);
+        });
+        return true;
     }
 }
 

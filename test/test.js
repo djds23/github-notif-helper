@@ -145,5 +145,15 @@ describe('Utils', function () {
       expect(localStorage.store[url2]).to.eql('{"diff-0":true}');
     })
   })
+
+  describe('#branchSpanToAnchor', function () {
+    it('takes a span and returns an anchor with the span inside of it', function () {
+      let originalSpan = document.createElement('span');
+      originalSpan.innerHTML = "master"
+      let anchor = Utils.branchSpanToAnchor(originalSpan);
+      expect(anchor.children[0]).to.eql(originalSpan);
+      expect(anchor.href).to.eql("https://github.com/djds23/github-notif-helper/tree/master");
+    })
+  })
 });
 
