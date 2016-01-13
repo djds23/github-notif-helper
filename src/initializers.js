@@ -79,6 +79,16 @@ class Initializers {
         Utils.updateLocalStorage('files', viewedFiles)
         return true
     }
+
+    /**
+     * @listens {EventFileInView} Listens to this event to add toggle button on file action bar
+     * @param   {Event} event - triggered from navigating to /files URL
+     * @param   {Selector} files - all file div's on the page
+     * @param   {number} commitNum - count of commits for the current PR
+     */
+    static makeBranchesLinks(event, files, commitNum) {
+        
+    }
 }
 
 export default Initializers
