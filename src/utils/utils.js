@@ -98,7 +98,7 @@ class Utils {
             return fileContent; // Short circuit if the toggle exists
         }
 
-        let button  = $('<a id="toggle" class="octicon-btn tooltipped tooltipped-nw"></a>');
+        let button  = $('<a id="toggle" class="btn-octicon tooltipped tooltipped-nw"></a>');
         button.on("click", (event) => {
             let visibilityBool = Utils.toggleVisibility(fileContent);
             Utils.setFileInCache(Utils.getKeyIdFromEvent(event), visibilityBool);
