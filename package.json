@@ -23,7 +23,7 @@
     "jsdom": "^7.2.1",
     "mocha": "^2.3.4",
     "mocha-jsdom": "^1.0.0",
-    "page-local-storage": "^1.0.1",
+    "page-local-storage": "^1.0.6",
     "simple-mock": "^0.5.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
