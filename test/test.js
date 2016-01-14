@@ -147,6 +147,10 @@ describe('Utils', function () {
   })
 
   describe('#branchSpanToAnchor', function () {
+    beforeEach(function () {
+      window.location.href = "https://github.com/djds23/github-notif-helper/pull/23";
+    })
+
     it('takes a span and returns an anchor with the span inside of it', function () {
       let originalSpan = document.createElement('span');
       originalSpan.innerHTML = "master"

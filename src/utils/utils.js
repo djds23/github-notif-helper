@@ -132,7 +132,10 @@ class Utils {
      * @return {HTMLAnchorElement} Anchor element
      */
     static branchSpanToAnchor(span) {
-        let branchUrl = "https://github.com/djds23/github-notif-helper/tree/" + span.innerHTML;
+        let indexOfPullInURL = window.location.href.indexOf('pull');
+        let branchUrl = (
+          window.location.href.slice(0, indexOfPullInURL) + 'tree/' + span.innerHTML
+        );
         let anchor = document.createElement('a');
         anchor.className = "branch-anchor-tag";
         anchor.href = branchUrl;
