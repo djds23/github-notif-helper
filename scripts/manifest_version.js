@@ -31,7 +31,7 @@ const main = function () {
     }
   }
 
-  [[dev, devPath], [dist, distPath], [packageObj, packagePath]].forEach((element, index, array) => {
+  [[dev, '/dev/manifest.json'], [dist, '/dist/manifest.json'], [packageObj, packagePath]].forEach((element, index, array) => {
     let obj = incVersion(versionParam, element[0]);
     jsonfile.writeFile(element[1], obj, {spaces: 2}, function(err) {
       console.error(err)
