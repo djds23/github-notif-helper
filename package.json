@@ -1,6 +1,6 @@
 {
   "name": "github-notif-helper",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "A Chrome extension that allows you to hide files in pull requests and adds highlighting for notifications.",
   "main": "app.js",
   "dependencies": {
