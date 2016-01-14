@@ -21,6 +21,7 @@
     "gulp-uglify": "^1.5.1",
     "gulp-util": "^3.0.7",
     "jsdom": "^7.2.1",
+    "jsonfile": "^2.2.3",
     "mocha": "^2.3.4",
     "mocha-jsdom": "^1.0.0",
     "simple-mock": "^0.5.0",
@@ -29,7 +30,8 @@
   },
   "scripts": {
     "test": "mocha --compilers js:babel-core/register",
-    "compress": "node scripts/compress.js"
+    "compress": "node scripts/compress.js",
+    "manifest": "node --use-strict scripts/manifest_version.js"
   },
   "repository": {
     "type": "git",
