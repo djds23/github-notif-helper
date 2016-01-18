@@ -29,7 +29,8 @@
   },
   "scripts": {
     "test": "mocha --compilers js:babel-core/register",
-    "compress": "node scripts/compress.js"
+    "compress": "node scripts/compress.js",
+    "build": "gulp release && npm run compress"
   },
   "repository": {
     "type": "git",
