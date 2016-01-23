@@ -159,5 +159,18 @@ describe('Utils', function () {
       expect(anchor.href).to.eql("https://github.com/djds23/github-notif-helper/tree/master");
     })
   })
+
+  describe('#filenameFromFileContainer', function () {
+    it('returns the extension from a filepath', function () {
+      let element = $(`
+      <div class='holder'>
+        <div class='file-header' data-path='package.json'>
+        </div>
+      </div>
+      `);
+      let extension = Utils.filenameFromFileContainer(element);
+      expect(extension).to.eql('json');
+    })
+  })
 });
 

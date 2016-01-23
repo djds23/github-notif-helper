@@ -142,6 +142,15 @@ class Utils {
         anchor.appendChild(span);
         return anchor;
     }
+
+    static filenameFromFileContainer(fileElement) {
+        let path = fileElement.find('.file-header').data('path');
+        let indexOfExtension = path.lastIndexOf('.');
+        if (indexOfExtension === -1) {
+            return null
+        }
+        return path.substr(indexOfExtension + 1);
+    }
 }
 
 export default Utils
