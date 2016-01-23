@@ -143,6 +143,11 @@ class Utils {
         return anchor;
     }
 
+    /**
+     * @desc Take a file jQuery selector and return the file extension 
+     * @param {jQuery} fileElement jQuery object holding the file 
+     * @return {string} file extension 
+     */
     static filenameFromFileContainer(fileElement) {
         let path = fileElement.find('.file-header').data('path');
         let indexOfExtension = path.lastIndexOf('.');

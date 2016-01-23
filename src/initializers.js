@@ -63,21 +63,6 @@ class Initializers {
      * @param   {number} commitNum - count of commits for the current PR
      */
     static addToggleByExtension(event, files, commitNum) {
-        if (!files.length || $('#toggle-all').length) {
-          return false;
-        }
-
-        let buttonGroup = $('.btn-group.right');
-        let templateButton = $('<a id="toggle-all" class="btn btn-sm"></a>');
-        templateButton.html('Toggle All');
-        templateButton.on('click',  (clickEvent) => {
-            files.each((i, element) => {
-                let fileContent = $(element).find("div.data, div.render-wrapper");
-                Utils.toggleVisibility(fileContent);
-            });
-        });
-        templateButton.appendTo(buttonGroup);
-        return true;
     }
 
 
