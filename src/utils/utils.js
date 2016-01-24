@@ -145,11 +145,11 @@ class Utils {
 
     /**
      * @desc Take a file jQuery selector and return the file extension
-     * @param {jQuery} fileElement jQuery object holding the file
+     * @param {HTMLElement} fileElement jQuery object holding the file
      * @return {string} file extension
      */
     static filenameFromFileContainer(fileElement) {
-        let path = fileElement.find('.file-header').data('path');
+        let path = $(fileElement).find('.file-header').data('path');
         let indexOfExtension = path.lastIndexOf('.');
         if (indexOfExtension === -1) {
             return path;
@@ -163,8 +163,8 @@ class Utils {
      * @param {Selector} files jQuery selector holding files of pull requests
      * @return {object} keys are file extensions, values are arrays of files
      */
-    static fileByExtension(files) {
-        filesByExtension = {}
+    static getFilesByExtension(files) {
+        let filesByExtension = {};
         files.each((i, element) => {
             const ext = Utils.filenameFromFileContainer(element);
             if (filesByExtension[ext] === undefined) {
@@ -173,6 +173,30 @@ class Utils {
             filesByExtension[ext].push(element);
         });
         return filesByExtension;
+    }
+
+    /**
+     * @param {object} filesByExtension object of files grouped by extension
+     * @param {jQuery} button root button to append line items to
+     * @return {jQuery} button with appended line items
+     */
+    static appendListItemsToButton(filesByExtension, button) {
+        for (let extension in filesByExtension) {
+            if (!filesByExtension.hasOwnProperty(extension)) {
+                continue;
+            }
+
+            let lineItem = $(`
+                <div class="select-menu-item js-navigation-item js-navigation-open" data-extension="${extension}" rel="nofollow">
+                  <span aria-hidden="true" class="octicon octicon-check select-menu-item-icon"></span>
+                  <span class="select-menu-item-text css-truncate-target" title="${extension}">
+                    ${extension}
+                  </span>
+               </div>
+           `);
+           button.append(lineItem);
+        }
+        return button;
     }
 }
 

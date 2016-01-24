@@ -39,6 +39,7 @@ $(document).ready(readyFunction);
 $(document).on(EventFileInView, Initializers.invalidateCache);
 
 // Anything else
+$(document).on(EventFileInView, Initializers.addToggleByExtension);
 $(document).on(EventFileInView, Initializers.addToggle);
 $(document).on(EventFileInView, Initializers.addToggleAll);
 $(document).on(EventOnPullPage, Initializers.makeBranchesLinks);

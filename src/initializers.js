@@ -110,30 +110,21 @@ class Initializers {
             return false;
         }
 
-        filesByExtension = Utils.filesByExtension(files);
+        let filesByExtension = Utils.getFilesByExtension(files);
         let selected = 'selected';
-        const buttonString = `
-            <button class="btn btn-sm select-menu-button js-menu-target css-truncate " title="Hide by Extension" type="button" aria-label="Hide branches by file extension" tabindex="0" aria-haspopup="true">
+        let button = $(`
+            <button class="btn btn-sm select-menu-button js-menu-target css-truncate" title="Hide by Extension" type="button" aria-label="Hide branches by file extension" tabindex="0" aria-haspopup="true">
               <i>Hide By Extension:</i>
               <span class="js-select-button css-truncate-target">master</span>
             </button>
-        `
-        let button = $(buttonString);
-        for (let extension in filesByExtension) {
-            if (!filesByExtension.hasOwnProperty(extension)) {
-                continue;
-            }
+        `);
 
-            let lineItem = `
-                <div class="select-menu-item js-navigation-item js-navigation-open" data-extension="${extension}" rel="nofollow">
-                  <span aria-hidden="true" class="octicon octicon-check select-menu-item-icon"></span>
-                  <span class="select-menu-item-text css-truncate-target" title="${extension}">
-                    ${extension}
-                  </span>
-               </div>
-           `
-           button.append($(lineItem));
-        }
+        Utils.appendListItemsToButton(
+            filesByExtension,
+            button
+        ).appendTo(
+            $('.btn-group.right')
+        );
     }
 }
 
