@@ -57,16 +57,6 @@ class Initializers {
     }
 
     /**
-     * @listens {EventFileInView} Listens to this event to add toggle all files button
-     * @param   {Event} event - triggered from navigating to /files URL
-     * @param   {Selector} files - all file div's on the page
-     * @param   {number} commitNum - count of commits for the current PR
-     */
-    static addToggleByExtension(event, files, commitNum) {
-    }
-
-
-    /**
      * @listens {EventFileInView} Listens to this event to add toggle button on file action bar
      * @param   {Event} event - triggered from navigating to /files URL
      * @param   {Selector} files - all file div's on the page
@@ -107,6 +97,43 @@ class Initializers {
             outerSpan.appendChild(anchor);
         });
         return true;
+    }
+
+    /**
+     * @listens {EventFileInView} Listens to this event to add toggle all files button
+     * @param   {Event} event - triggered from navigating to /files URL
+     * @param   {Selector} files - all file div's on the page
+     * @param   {number} commitNum - count of commits for the current PR
+     */
+    static addToggleByExtension(event, files, commitNum) {
+        if (!files.length) {
+            return false;
+        }
+
+        filesByExtension = Utils.filesByExtension(files);
+        let selected = 'selected';
+        const buttonString = `
+            <button class="btn btn-sm select-menu-button js-menu-target css-truncate " title="Hide by Extension" type="button" aria-label="Hide branches by file extension" tabindex="0" aria-haspopup="true">
+              <i>Hide By Extension:</i>
+              <span class="js-select-button css-truncate-target">master</span>
+            </button>
+        `
+        let button = $(buttonString);
+        for (let extension in filesByExtension) {
+            if (!filesByExtension.hasOwnProperty(extension)) {
+                continue;
+            }
+
+            let lineItem = `
+                <div class="select-menu-item js-navigation-item js-navigation-open" data-extension="${extension}" rel="nofollow">
+                  <span aria-hidden="true" class="octicon octicon-check select-menu-item-icon"></span>
+                  <span class="select-menu-item-text css-truncate-target" title="${extension}">
+                    ${extension}
+                  </span>
+               </div>
+           `
+           button.append($(lineItem));
+        }
     }
 }
 

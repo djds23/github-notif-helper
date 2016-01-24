@@ -144,17 +144,35 @@ class Utils {
     }
 
     /**
-     * @desc Take a file jQuery selector and return the file extension 
-     * @param {jQuery} fileElement jQuery object holding the file 
-     * @return {string} file extension 
+     * @desc Take a file jQuery selector and return the file extension
+     * @param {jQuery} fileElement jQuery object holding the file
+     * @return {string} file extension
      */
     static filenameFromFileContainer(fileElement) {
         let path = fileElement.find('.file-header').data('path');
         let indexOfExtension = path.lastIndexOf('.');
         if (indexOfExtension === -1) {
-            return null
+            return path;
         }
         return path.substr(indexOfExtension + 1);
+    }
+
+    /**
+     * @desc Transform a selector of file divs and return an object of files
+     *   grouped by extension
+     * @param {Selector} files jQuery selector holding files of pull requests
+     * @return {object} keys are file extensions, values are arrays of files
+     */
+    static fileByExtension(files) {
+        filesByExtension = {}
+        files.each((i, element) => {
+            const ext = Utils.filenameFromFileContainer(element);
+            if (filesByExtension[ext] === undefined) {
+                filesByExtension[ext] = [];
+            }
+            filesByExtension[ext].push(element);
+        });
+        return filesByExtension;
     }
 }
 
