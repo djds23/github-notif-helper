@@ -145,11 +145,11 @@ class Utils {
 
     /**
      * @desc Take a file jQuery selector and return the file extension
-     * @param {HTMLElement} fileElement jQuery object holding the file
+     * @param {jQuery} fileElement jQuery object holding the file
      * @return {string} file extension
      */
     static filenameFromFileContainer(fileElement) {
-        let path = $(fileElement).find('.file-header').data('path');
+        let path = fileElement.find('.file-header').data('path');
         let indexOfExtension = path.lastIndexOf('.');
         if (indexOfExtension === -1) {
             return path;
@@ -166,7 +166,7 @@ class Utils {
     static getFilesByExtension(files) {
         let filesByExtension = {};
         files.each((i, element) => {
-            const ext = Utils.filenameFromFileContainer(element);
+            const ext = Utils.filenameFromFileContainer($(element));
             if (filesByExtension[ext] === undefined) {
                 filesByExtension[ext] = [];
             }
@@ -194,6 +194,12 @@ class Utils {
                   </span>
                </div>
            `);
+
+           lineItem.on('click', (clickEvent) => {
+               filesByExtension[extension].forEach((element, index, array) => {
+                   // Hide all files in category
+               });
+           });
            button.append(lineItem);
         }
         return button;
