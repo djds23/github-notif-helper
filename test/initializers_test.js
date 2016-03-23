@@ -91,9 +91,7 @@ describe('Initializers', function () {
     beforeEach(function () {
       global.window = document.defaultView;
       global.$ = require('jquery')(window);
-      simple.mock(Utils, 'addToggleButtonForElement').returnWith(undefined);
       simple.mock(Utils, 'getCachedFiles').callOriginal();
-
     })
 
     it('does nothing if no files are passed', function () {
@@ -103,9 +101,13 @@ describe('Initializers', function () {
     })
 
     it('adds id to cache for each file object', function () {
-      const mockFileOne = { id: 'diff-0' };
-      const mockFileTwo = { id: 'diff-1' };
-      const mockFileThree = { id: 'diff-2' };
+      const mockFileOne = document.createElement('div');
+      const mockFileTwo = document.createElement('div');
+      const mockFileThree = document.createElement('div');
+
+      mockFileOne.id = 'diff-0';
+      mockFileTwo.id = 'diff-1';
+      mockFileThree.id = 'diff-2';
 
       let togglesAdded;
       let callToggle = () => {

@@ -72,7 +72,8 @@ class Initializers {
         let viewedFiles = Utils.getCachedFiles();
         files.each((i, element) => {
             let lastView = viewedFiles[element.id];
-            let file = new File($(element));
+            let $element = $(element);
+            let file = new File($element);
             let button = file.addToggleButton();
             if (lastView === false) {
                 file.hide(100);
