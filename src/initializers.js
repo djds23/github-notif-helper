@@ -49,10 +49,10 @@ class Initializers {
         templateButton.html('Toggle All');
         templateButton.on('click',  (clickEvent) => {
             files.each((i, element) => {
-                let fileContent = new File(
-                  $(element).find("div.data, div.render-wrapper")
+                let file = new File(
+                    $(element).find("div.data, div.render-wrapper")
                 );
-                Utils.toggleVisibility(fileContent);
+                Utils.toggleVisibility(file.diffContent);
             });
         });
         templateButton.appendTo(buttonGroup);
@@ -74,7 +74,6 @@ class Initializers {
             let lastView = viewedFiles[element.id];
             let file = new File($(element));
             let button = file.addToggleButton();
-
             if (lastView === false) {
                 file.hide(100);
             } else {
@@ -82,7 +81,7 @@ class Initializers {
             }
 
             button.on('click', (event) => {
-                let visibilityBool = Utils.toggleVisibility(file.diffContent());
+                let visibilityBool = Utils.toggleVisibility(file.diffContent);
                 Utils.setFileInCache(
                     Utils.getKeyIdFromEvent(event),
                     visibilityBool

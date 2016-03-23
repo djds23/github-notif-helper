@@ -2,6 +2,7 @@ import {assert, expect} from 'chai';
 import jsdom from 'mocha-jsdom';
 import simple from 'simple-mock';
 
+import File from '../src/models/file.js';
 import Utils from '../src/utils/utils.js';
 import Initializers from '../src/initializers.js';
 import MockLocalStorage from './localStorage.js';
@@ -10,16 +11,6 @@ import MockLocalStorage from './localStorage.js';
 describe('Initializers', function () {
   var $;
   jsdom();
-
-  before(function () {
-    // Mock each function so I can pass array and iterate over it
-    // as if it was a jQuery selector.
-    Array.prototype.each = function (func) {
-      this.forEach((element, index, array) => {
-        func(index, element);
-      });
-    };
-  })
 
   describe('#invalidateCache', function () {
     beforeEach(function () {
@@ -106,7 +97,7 @@ describe('Initializers', function () {
     })
 
     it('does nothing if no files are passed', function () {
-      const togglesAdded = Initializers.addToggle({}, [], 0);
+      const togglesAdded = Initializers.addToggle({}, $([]), 0);
       expect(Utils.getCachedFiles.callCount).to.eql(0);
       expect(togglesAdded).to.be.false;
     })
@@ -118,7 +109,7 @@ describe('Initializers', function () {
 
       let togglesAdded;
       let callToggle = () => {
-        togglesAdded = Initializers.addToggle({}, [mockFileOne, mockFileTwo, mockFileThree], 1)
+        togglesAdded = Initializers.addToggle({}, $([mockFileOne, mockFileTwo, mockFileThree]), 1)
       };
 
       let cachedFilesFunc = Utils.getCachedFiles;

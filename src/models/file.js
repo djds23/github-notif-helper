@@ -13,32 +13,28 @@ class File {
      */
     constructor(jquerySelector) {
         this.jquerySelector = jquerySelector;
+        this.diffContent = jquerySelector.find("div.data, div.render-wrapper");
     }
 
     /**
      * @see http://api.jquery.com/hide/
      */
     hide() {
-        return this.jquerySelector.hide.apply(this.jquerySelector, arguments);
+        return this.diffContent.hide.apply(this.diffContent, arguments);
     }
 
     /**
      * @see http://api.jquery.com/is/
      */
     is() {
-        return this.jquerySelector.is.apply(this.jquerySelector, arguments);
-    }
-
-    diffContent() {
-        return $(this.jquerySelector).find("div.data, div.render-wrapper");
+        return this.diffContent.is.apply(this.diffContent, arguments);
     }
 
     /**
      * @return {jQuery} jQuery selector containing the new button
      */
     addToggleButton() {
-        let $element = $(this.jquerySelector)
-        let actionBar = $element.find("div.file-actions");
+        let actionBar = this.jquerySelector.find("div.file-actions");
         let existingButton = actionBar.find("#toggle")
         if (existingButton.length) {
             return existingButton; // Short circuit if the toggle exists
