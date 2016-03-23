@@ -1,3 +1,4 @@
+import File from './models/file.js';
 import Utils from './utils/utils.js';
 import CacheValidator from './utils/cache_validator.js';
 import $ from 'jquery';
@@ -48,7 +49,9 @@ class Initializers {
         templateButton.html('Toggle All');
         templateButton.on('click',  (clickEvent) => {
             files.each((i, element) => {
-                let fileContent = $(element).find("div.data, div.render-wrapper");
+                let fileContent = new File(
+                  $(element).find("div.data, div.render-wrapper")
+                );
                 Utils.toggleVisibility(fileContent);
             });
         });
@@ -68,13 +71,23 @@ class Initializers {
         }
         let viewedFiles = Utils.getCachedFiles();
         files.each((i, element) => {
-            let cachedView = viewedFiles[element.id];
-            let fileContent = Utils.addToggleButtonForElement(element);
-            if (cachedView === false) {
-                fileContent.hide(100);
+            let lastView = viewedFiles[element.id];
+            let file = new File($(element));
+            let button = file.addToggleButton();
+
+            if (lastView === false) {
+                file.hide(100);
             } else {
                 viewedFiles[element.id] = true;
             }
+
+            button.on('click', (event) => {
+                let visibilityBool = Utils.toggleVisibility(file.diffContent());
+                Utils.setFileInCache(
+                    Utils.getKeyIdFromEvent(event),
+                    visibilityBool
+                );
+            });
         });
         Utils.updateLocalStorage('files', viewedFiles)
         return true
